@@ -29,7 +29,7 @@
     session_start();
 
     $stmt = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
-    $stmt->bind_param("s",$_SESSION['id']);
+    $stmt->bind_param("s",$_SESSION['user_id']);
     $stmt->execute();
     $info = $stmt->get_result()->fetch_assoc();
     
@@ -64,7 +64,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        MAIN NAVIGATION
       </div>
       <li class="nav-item">
         <a class="nav-link" href="charts.html">
@@ -114,7 +114,7 @@
             <i class="fa fa-bars"></i>
           </button>
 
-         
+         <h2>Subject and Room Management System</h2>
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -123,8 +123,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $info['first_name']?></span>
-                <img class="img-profile rounded-circle" src="<?php echo $info['profile_picture'] ?>">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $info['info_first_name']?></span>
+                <img class="img-profile rounded-circle" src="<?php echo $info['info_profile_picture'] ?>">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -143,11 +143,6 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid" style="padding-left: 0px!important; padding-right: 0px!important">
-
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-          </div>
 
           <!-- Content Row -->
           <div class="row">
@@ -204,7 +199,7 @@
 
           
 
-        </div>
+    
         <!-- /.container-fluid -->
 
           

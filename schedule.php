@@ -28,7 +28,7 @@
     session_start();
 
     $stmt = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
-    $stmt->bind_param("s",$_SESSION['id']);
+    $stmt->bind_param("s",$_SESSION['user_id']);
     $stmt->execute();
     $info = $stmt->get_result()->fetch_assoc();
 
@@ -129,8 +129,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $info['first_name']?></span>
-                <img class="img-profile rounded-circle" src="<?php echo $info['profile_picture'] ?>">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $info['info_first_name']?></span>
+                <img class="img-profile rounded-circle" src="<?php echo $info['info_profile_picture'] ?>">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -163,17 +163,17 @@
             <div id="inputContainer" class="row">
                <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
                   <?php 
-                      $stmt = $db->prepare("SELECT * FROM  user WHERE type = 1");
+                      $stmt = $db->prepare("SELECT * FROM  user WHERE user_type = 1");
                       $stmt->execute();
                       $info = $stmt->get_result();
                       echo '<select id="student" class="form-control " name="student" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
                         <option disabled selected="selected">Student Name</option>';
                        while ($value = $info->fetch_assoc()) {
                             $stmt = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
-                            $stmt->bind_param("s",$value['id']);
+                            $stmt->bind_param("s",$value['user_id']);
                             $stmt->execute();
                             $user = $stmt->get_result()->fetch_assoc();
-                            echo "<option value=".$value['id']." >".$user['first_name']."</option>";
+                            echo "<option value=".$value['user_id']." >".$user['info_first_name']."</option>";
                         }
                       
                          echo '</select>';
@@ -380,17 +380,17 @@
      $subject = $_POST['subject'];
      $room = $_POST['room'];
      $student = $_POST['student'];
-     $dpd =  $_SESSION['id'];
+     $dpd =  $_SESSION['user_id'];
      $classType = $_POST['classType'];
      $day =  $_POST['day'];
      $start_time = $_POST['start'];
      $end_time =  $_POST['end'];
-     $stmt = $db->prepare("INSERT INTO schedule (subject_id, room_id, user_id, dpd_id, type, day, start_time, end_time) VALUES (?,?,?,?,?,?,?,?)");
+     $stmt = $db->prepare("INSERT INTO schedule (subject_id, room_id, user_id, dpd_id, class_type, day, start_time_id, end_time_id) VALUES (?,?,?,?,?,?,?,?)");
      $stmt->bind_param("iiiissii", $subject, $room, $student, $dpd, $classType, $day, $start_time, $end_time);
         if($stmt->execute()){
-          echo "success";
+         
         }else{
-          echo "failed";
+        
         }
   }
 
@@ -549,6 +549,7 @@
                    student: student,
                    day: day},
           success: function(response) {
+
               $('#room').html(response);
               $('#room').css('display', 'block');
               console.log(response);

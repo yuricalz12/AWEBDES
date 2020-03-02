@@ -9,17 +9,17 @@
   //Get Subject for Students based on course//
   if($_POST['action'] == 'getSubject'){
   	 $student = $_POST['student'];
-  	 $stmt = $db->prepare("SELECT * FROM  user where id = ?");
+  	 $stmt = $db->prepare("SELECT * FROM  user where user_id = ?");
 	 $stmt->bind_param('i', $student);
 	 $stmt->execute();
      $result = $stmt->get_result()->fetch_assoc();
-     $stmt = $db->prepare("SELECT * FROM  subject WHERE course = ?");
-     $stmt->bind_param("i",$result['course']);
+     $stmt = $db->prepare("SELECT * FROM  subject WHERE course_id = ?");
+     $stmt->bind_param("i",$result['course_id']);
      $stmt->execute();
      $info = $stmt->get_result();
      $output= '<option disabled selected="selected">Subject Name</option>';
 		while ($value = $info->fetch_assoc()) {
-		  $output.= "<option value=".$value['id']." >".$value['subject_name']."</option>";
+		  $output.= "<option value=".$value['subject_id']." >".$value['subject_name']."</option>";
 		}
                
 
@@ -37,10 +37,9 @@
    	 $day = $_POST['day'];
    	 $count = 0;
 
-	foreach (range($start+1, $end-1) as $key) {
+	foreach (range($start, $end-1) as $key) {
 		$count++;
 	}
-	$start++;
 	while ($count  != 0) {
 	 	$timeID[] = $start++;
 
@@ -51,7 +50,7 @@
 
 	
 
-   	$stmt = $db->prepare("SELECT * FROM schedule WHERE day =? AND (start_time IN (".$searchID.") OR end_time IN (".$searchID.") )");
+   	$stmt = $db->prepare("SELECT * FROM schedule WHERE day =? AND (start_time_id IN (".$searchID.") OR end_time_id IN (".$searchID.") )");
    	$stmt->bind_param('s', $day);
    	$stmt->execute();
     $result = $stmt->get_result();
@@ -61,7 +60,7 @@
 	     $rooms = $stmt2->get_result();
 	     $output= '<option disabled selected="selected">Room Name</option>';
 			 while ($value = $rooms->fetch_assoc()) {
-			         $output.= "<option value=".$value['id']." >".$value['room_name']."</option>";
+			         $output.= "<option value=".$value['room_id']." >".$value['room_name']."</option>";
 			 }
     }else{
     	while ($value = $result->fetch_assoc()) {
@@ -69,12 +68,12 @@
 		}
 
 		 $searchID2 = implode(',', $filter);
-	     $stmt2 = $db->prepare("SELECT * FROM  room WHERE id NOT IN (".$searchID2.")");
+	     $stmt2 = $db->prepare("SELECT * FROM  room WHERE room_id NOT IN (".$searchID2.")");
 	     $stmt2->execute();
 	     $rooms = $stmt2->get_result();
 	     $output= '<option disabled selected="selected">Room Name</option>';
 			 while ($value = $rooms->fetch_assoc()) {
-			         $output.= "<option value=".$value['id']." >".$value['room_name']."</option>";
+			         $output.= "<option value=".$value['room_id']." >".$value['room_name']."</option>";
 			 }
     }
     
@@ -115,15 +114,15 @@
 		    $stmt->execute();
 	 }else{
 	  	while ($value = $result->fetch_assoc()) {
-			foreach (range($value['start_time']+1, $value['end_time']) as $key) {
-				$time[] = $value['start_time']++;
+			foreach (range($value['start_time_id']+1, $value['end_time_id']) as $key) {
+				$time[] = $value['start_time_id']++;
 			}
 		}
 
 		$searchID = implode(',', $time);
 
 
-		$stmt = $db->prepare("SELECT * FROM  time where id NOT IN (".$searchID.") AND id != 29");
+		$stmt = $db->prepare("SELECT * FROM  time where time_id NOT IN (".$searchID.") AND time_id != 29");
 		$stmt->execute();
 		    
 	}
@@ -131,7 +130,7 @@
 	$info = $stmt->get_result();
 	$output= '<option disabled selected="selected">Start Time</option>';
 	while ($value = $info->fetch_assoc()) {
-		$output.= "<option value=".$value['id'].">".$value['time']."</option>";
+		$output.= "<option value=".$value['time_id'].">".$value['time']."</option>";
 	}
 
      echo $output;
@@ -144,7 +143,7 @@
    	 $subject = $_POST['subject'];
    	 $classType = $_POST['classType'];
    	 $student = $_POST['student'];
-   	 $stmt = $db->prepare("SELECT * FROM  subject where id = ?");
+   	 $stmt = $db->prepare("SELECT * FROM  subject where subject_id = ?");
    	 $stmt->bind_param('i', $subject);
 	 $stmt->execute();
 	 $info = $stmt->get_result()->fetch_assoc();
@@ -153,19 +152,19 @@
 	 $time = array();
 
 	 if($classType == 'lecture'){
-	 	$stmt = $db->prepare("SELECT * FROM  schedule where subject_id = ? AND type = ? AND user_id = ?");
+	 	$stmt = $db->prepare("SELECT * FROM  schedule where subject_id = ? AND class_type = ? AND user_id = ?");
 	 	$stmt->bind_param('isi', $subject, $classType, $student);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		$count = 0;
 		while ($schedule = $result->fetch_assoc()) {
-			foreach (range($schedule['start_time']+1, $schedule['end_time']) as $key) {
+			foreach (range($schedule['start_time_id']+1, $schedule['end_time_id']) as $key) {
 				$count++;
 			}
 		}
 
 	 	$nextID = $start + 1;
-	 	$counter = ($info['lecture_hour'] / 0.5) - $count;
+	 	$counter = ($info['subject_lecture_hour'] / 0.5) - $count;
 
 	 	 $stmt3 = $db->prepare("SELECT * FROM schedule where user_id = ?");
 	  	 $stmt3->bind_param('i',$student);
@@ -186,18 +185,18 @@
 			 	}
 
 			 	$searchID = implode(',', $timeID);
-			 	$stmt2 = $db->prepare("SELECT * FROM  time where id IN (".$searchID.")");
+			 	$stmt2 = $db->prepare("SELECT * FROM  time where time_id IN (".$searchID.")");
 			    $stmt2->execute();
 				$info = $stmt2->get_result();
 				$output = '<option disabled selected="selected">End Time</option>';
 					while ($value = $info->fetch_assoc()) {
-						$output.= "<option value=".$value['id'].">".$value['time']."</option>";
+						$output.= "<option value=".$value['time_id'].">".$value['time']."</option>";
 					}
 		 	}
 	  	}else{
 	  		while ($value3 = $result3->fetch_assoc()) {
-			foreach (range($value3['start_time']+1, $value3['end_time']) as $key) {
-					$time[] = ($value3['start_time']++)+1;
+			foreach (range($value3['start_time_id']+1, $value3['end_time_id']) as $key) {
+					$time[] = ($value3['start_time_id']++)+1;
 				}
 			}
 
@@ -216,12 +215,12 @@
 			 	}
 
 			 	$searchID = implode(',', $timeID);
-			 	$stmt2 = $db->prepare("SELECT * FROM  time where id IN (".$searchID.") AND id NOT IN (".$searchID3.")");
+			 	$stmt2 = $db->prepare("SELECT * FROM  time where time_id IN (".$searchID.") AND time_id NOT IN (".$searchID3.")");
 			    $stmt2->execute();
 				$info = $stmt2->get_result();
 				$output = '<option disabled selected="selected">End Time</option>';
 					while ($value = $info->fetch_assoc()) {
-						$output.= "<option value=".$value['id'].">".$value['time']."</option>";
+						$output.= "<option value=".$value['time_id'].">".$value['time']."</option>";
 					}
 		 	}
 	  	}
@@ -229,19 +228,19 @@
 	  	
 	 	
 	 }else{
-	 	$stmt = $db->prepare("SELECT * FROM  schedule where subject_id = ? AND type = ? AND user_id = ?");
+	 	$stmt = $db->prepare("SELECT * FROM  schedule where subject_id = ? AND class_type = ? AND user_id = ?");
 	 	$stmt->bind_param('isi', $subject, $classType, $student);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		$count = 0;
 		while ($schedule = $result->fetch_assoc()) {
-			foreach (range($schedule['start_time']+1, $schedule['end_time']) as $key) {
+			foreach (range($schedule['start_time_id']+1, $schedule['end_time_id']) as $key) {
 				$count++;
 			}
 		}
 
 	 	$nextID = $start + 1;
-	 	$counter = ($info['lab_hour'] / 0.5) - $count;
+	 	$counter = ($info['subject_lab_hour'] / 0.5) - $count;
 
 		$stmt3 = $db->prepare("SELECT * FROM schedule where user_id = ?");
 	  	$stmt3->bind_param('i',$student);
@@ -262,18 +261,18 @@
 			 	}
 
 			 	$searchID = implode(',', $timeID);
-			 	$stmt2 = $db->prepare("SELECT * FROM  time where id IN (".$searchID.")");
+			 	$stmt2 = $db->prepare("SELECT * FROM  time where time_id IN (".$searchID.")");
 			    $stmt2->execute();
 				$info = $stmt2->get_result();
 				$output = '<option disabled selected="selected">End Time</option>';
 					while ($value = $info->fetch_assoc()) {
-						$output.= "<option value=".$value['id'].">".$value['time']."</option>";
+						$output.= "<option value=".$value['time_id'].">".$value['time']."</option>";
 					}
 		 	}
 	  	}else{
 	  		while ($value3 = $result3->fetch_assoc()) {
-			foreach (range($value3['start_time']+1, $value3['end_time']) as $key) {
-					$time[] = ($value3['start_time']++)+1;
+			foreach (range($value3['start_time_id']+1, $value3['end_time_id']) as $key) {
+					$time[] = ($value3['start_time_id']++)+1;
 				}
 			}
 
@@ -292,12 +291,12 @@
 			 	}
 
 			 	$searchID = implode(',', $timeID);
-			 	$stmt2 = $db->prepare("SELECT * FROM  time where id IN (".$searchID.") AND id NOT IN (".$searchID3.")");
+			 	$stmt2 = $db->prepare("SELECT * FROM  time where time_id IN (".$searchID.") AND time_id NOT IN (".$searchID3.")");
 			    $stmt2->execute();
 				$info = $stmt2->get_result();
 				$output = '<option disabled selected="selected">End Time</option>';
 					while ($value = $info->fetch_assoc()) {
-						$output.= "<option value=".$value['id'].">".$value['time']."</option>";
+						$output.= "<option value=".$value['time_id'].">".$value['time']."</option>";
 					}
 		 	}
 	  	}
@@ -315,26 +314,26 @@
     $stmt->execute();
     $result = $stmt->get_result();
     while ($value = $result->fetch_assoc()) {
-    	$stmt2 = $db->prepare("SELECT * FROM subject WHERE id = ?");
+    	$stmt2 = $db->prepare("SELECT * FROM subject WHERE subject_id = ?");
 	  	$stmt2->bind_param('i', $value['subject_id']);
 	    $stmt2->execute();
 	    $subject = $stmt2->get_result()->fetch_assoc();
 
-	    $stmt3 = $db->prepare("SELECT * FROM room WHERE id = ?");
+	    $stmt3 = $db->prepare("SELECT * FROM room WHERE room_id = ?");
 	  	$stmt3->bind_param('i', $value['room_id']);
 	    $stmt3->execute();
 	    $room = $stmt3->get_result()->fetch_assoc();
-	    foreach (range($value['start_time'], $value['end_time']-1) as $key) {
+	    foreach (range($value['start_time_id'], $value['end_time_id']-1) as $key) {
 				$time[] = array(
-					"time_id" => $value['start_time']++
+					"time_id" => $value['start_time_id']++
 				);
 			}
     	$schedule[] = array(
     				   "subject" => $subject['subject_name'],
     				   "day" => $value['day'],
     				   "room" => $room['room_name'],
-    				   "classType" => $value['type'],
-    				   "color" =>$subject['color'],
+    				   "classType" => $value['class_type'],
+    				   "color" =>$subject['subject_color'],
     				   "time" => $time
     				   );
 
