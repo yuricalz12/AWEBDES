@@ -28,7 +28,7 @@
     session_start();
 
     $stmt = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
-    $stmt->bind_param("s",$_SESSION['id']);
+    $stmt->bind_param("s",$_SESSION['user_id']);
     $stmt->execute();
     $info = $stmt->get_result()->fetch_assoc();
 

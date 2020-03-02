@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ccccc<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,22 +30,22 @@
 		$error = '';
 
 		if(isset($_POST['submit'])){
-			  $stmt = $db->prepare("SELECT * FROM  user WHERE email = ?");
+			  $stmt = $db->prepare("SELECT * FROM  user WHERE user_email = ?");
 		      $stmt->bind_param("s",$_POST['email']);
 		      $stmt->execute();
 		      $result = $stmt->get_result();
 
 		      if ($result->num_rows > 0) {
 		      	$result = $result->fetch_assoc();
-		      	  if(password_verify($_POST['password'], $result['password'])){
-		      	  	if($result['type'] == 1){
-		      	  		$_SESSION['id'] = $result['id'];
+		      	  if(password_verify($_POST['password'], $result['user_password'])){
+		      	  	if($result['user_type'] == 1){
+		      	  		$_SESSION['user_id'] = $result['user_id'];
 		      	  		header("location:dashboard.php");
-		      	  	}elseif($result['type'] == 2){
-		      	  		$_SESSION['id'] = $result['id'];
+		      	  	}elseif($result['user_type'] == 2){
+		      	  		$_SESSION['user_id'] = $result['user_id'];
 		      	  		header("location:dashboardTeacher.php");
-		      	  	}elseif($result['type'] == 3){
-		      	  		$_SESSION['id'] = $result['id'];
+		      	  	}elseif($result['user_type'] == 3){
+		      	  		$_SESSION['user_id'] = $result['user_id'];
 		      	  		header("location:dashboardDPD.php");
 		      	  	}
 		      	  }else{
