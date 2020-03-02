@@ -168,13 +168,13 @@
               </thead> 
               <tbody> 
                 <tr>
-                  <td>7:00</td><td>7:30</td><td id="monday-1"></td><td></td><td></td><td></td><td></td>
+                  <td>7:00</td><td>7:30</td><td id="monday-1"></td><td id="tuesday-1"></td><td></td><td></td><td></td>
                 </tr> 
                 <tr>
-                  <td>7:30</td><td>8:00</td><td id="monday-2"></td><td></td><td></td><td></td><td></td>
+                  <td>7:30</td><td>8:00</td><td id="monday-2"></td><td id="tuesday-2"></td><td></td><td></td><td></td>
                 </tr> 
                 <tr>
-                  <td>8:00</td><td>8:30</td><td id="monday-3"></td><td></td><td></td><td></td><td></td>
+                  <td>8:00</td><td>8:30</td><td id="monday-3"></td><td id="tuesday-3"></td><td></td><td></td><td></td>
                 </tr> 
                 <tr>
                   <td>8:30</td><td>9:00</td><td id="monday-4"></td><td></td><td></td><td></td><td></td>
