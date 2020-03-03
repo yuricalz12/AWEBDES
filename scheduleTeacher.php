@@ -64,7 +64,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        MAIN NAVIGATION
       </div>
       <li class="nav-item">
         <a class="nav-link" href="schedule.php">
@@ -120,7 +120,7 @@
             <i class="fa fa-bars"></i>
           </button>
 
-         
+         <h2>Subject and Room Management System</h2>
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 

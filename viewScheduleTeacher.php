@@ -53,10 +53,10 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="dashboard.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard Teacher</span></a>
+          <span>Dashboard Student</span></a>
       </li>
 
       <!-- Divider -->
@@ -66,8 +66,8 @@
       <div class="sidebar-heading">
         MAIN NAVIGATION
       </div>
-      <li class="nav-item">
-        <a class="nav-link" href="viewScheduleTeacher.php">
+      <li class="nav-item active">
+        <a class="nav-link " href="viewScheduleStudent.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>View schedule</span></a>
       </li>
@@ -82,7 +82,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="profile.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>Profile</span></a>
       </li>
@@ -142,65 +142,119 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid" style="padding-left: 0px!important; padding-right: 0px!important">
+        <div class="container-fluid">
+
+          <?php echo "<input type='hidden' id='teacher' value='".$_SESSION['user_id']."' >" ?>
 
           <!-- Content Row -->
-          <div class="row">
-            <div class="col-md-12" style="background-image: url('img/dashboard1.png');background-position: center; background-repeat: no-repeat; background-size: cover;">
-              <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br>
+          <div  class="row">
+            <div>
+              
+            
+            <table id="table" class="table  table-bordered " style="width: auto!important;">
+              <thead  class="bg-primary" style="color:white;"> 
+                <tr> 
+                  <th colspan="2">Time</th>
+                  <th colspan="5">Days </th>
+                </tr>
+                <tr>
+                  <td colspan="2"></td> 
+                  <td>Monday</td> 
+                  <td>Tuesday</td> 
+                  <td>Wednesday</td> 
+                  <td>Thursday</td> 
+                  <td>Friday</td> 
+                </tr>
+              </thead> 
+              <tbody> 
+                <tr>
+                  <td>7:00</td><td>7:30</td><td id="monday-1"></td><td id="tuesday-1"></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>7:30</td><td>8:00</td><td id="monday-2"></td><td id="tuesday-2"></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>8:00</td><td>8:30</td><td id="monday-3"></td><td id="tuesday-3"></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>8:30</td><td>9:00</td><td id="monday-4"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>9:00</td><td>9:30</td><td id="monday-5"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>9:30</td><td>10:00</td><td id="monday-6"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>10:00</td><td>10:30</td><td id="monday-7"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>10:30</td><td>11:00</td><td id="monday-8"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>11:00</td><td>11:30</td><td id="monday-9"></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                  <td>11:30</td><td>12:00</td><td id="monday-10"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>12:00</td><td>12:30</td><td id="monday-11"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>12:30</td><td>1:00</td><td id="monday-12"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>1:00</td><td>1:30</td><td id="monday-13"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>1:30</td><td>2:00</td><td id="monday-14"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>2:00</td><td>2:30</td><td id="monday-15"></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                  <td>2:30</td><td>3:00</td><td id="monday-16"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>3:00</td><td>3:30</td><td id="monday-17"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>3:30</td><td>4:00</td><td id="monday-18"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>4:00</td><td>4:30</td><td id="monday-19"></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                  <td>4:30</td><td>5:00</td><td id="monday-20"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>5:00</td><td>5:30</td><td id="monday-21"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>5:30</td><td>6:00</td><td id="monday-22"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>6:00</td><td>6:30</td><td id="monday-23"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>6:30</td><td>7:00</td><td id="monday-24"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>7:00</td><td>7:30</td><td id="monday-25"></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                  <td>7:30</td><td>8:00</td><td id="monday-26"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>8:00</td><td>8:30</td><td id="monday-27"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+                <tr>
+                  <td>8:30</td><td>9:00</td><td id="monday-28"></td><td></td><td></td><td></td><td></td>
+                </tr> 
+              </tbody>
+            </table>
             </div>
-            <div class="col-md-12" style="background-image: url('img/backgroundHats.jpg');background-position: center; background-repeat: no-repeat; background-size: cover;">
-              <br><br>
-              <div class="row">
-                <div class="col-md-2 offset-5">
-                  <center>
-                    <h1 style="color: white;">Academics</h1>
-                  </center>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                  <div class="col-md-4">
-                    <center>
-                      <img src="img/pic1.png">
-                      <label style="color:white; margin-left: 1vh; margin-right: 1vh;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</label>
-                    </center>
-                  </div>
-                  <div class="col-md-4">
-                    <center>
-                      <img src="img/pic2.png">
-                      <label style="color:white; margin-left: 1vh; margin-right: 1vh;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</label>
-                    </center>
-                  </div>
-                  <div class="col-md-4">
-                    <center>
-                      <img src="img/pic3.png">
-                      <label style="color:white; margin-left: 1vh; margin-right: 1vh;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</label>
-                    </center>
-                  </div>
-              </div>
-            </div>
-           </div>
-
-          
-
-    
-        <!-- /.container-fluid -->
+          </div>
 
           
 
@@ -266,6 +320,39 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
+
+  <script type="text/javascript">
+        var teacher = $('#teacher').val();
+        $.ajax({
+          type: "POST",
+          url: "php/request.php",
+          data: { action: "getScheduleTeacher",
+                   teacher: teacher},
+          success: function(response) {
+              var obj = JSON.parse(response);
+              console.log(obj);
+               obj.forEach(el => {
+                  el.time.forEach(time =>{
+                     $('#'+el.day+"-"+time.time_id).css("background", el.color);
+                     $('#'+el.day+"-"+time.time_id).css("color", "black");
+                     $('#'+el.day+"-"+time.time_id).html(el.subject+"<br>"+el.classType+"<br>"+el.room);
+
+                  });
+                   var count = el.time.length;
+
+                   $('#'+el.day+"-"+el.time[0].time_id).attr("rowspan", count);
+
+                   for (var i = 1; i < count ; i++) {
+                     $('#'+el.day+"-"+(el.time[0].time_id+i)).remove();
+                   }
+
+               });
+
+            }
+          
+        });
+  
+  </script>
 
 </body>
 

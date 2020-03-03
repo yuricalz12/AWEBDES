@@ -64,7 +64,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        MAIN NAVIGATION
       </div>
       <li class="nav-item active">
         <a class="nav-link " href="viewScheduleStudent.php">
