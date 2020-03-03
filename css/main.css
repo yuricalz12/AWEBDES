@@ -1,12 +1,12 @@
 .bg-login-image{
-	 background: url("../img/logo.jpg"); 
+	 background: url("../img/test.png"); 
 	 background-position: center;
  	 background-size: 90% 90%;
   background-repeat: no-repeat;
 }
 
 .bg-register-image {
-   background: url("../img/logo.jpg"); 
+   background: url("../img/test.png"); 
   background-position: center;
   background-size: 90% 60%;
   background-repeat: no-repeat;

@@ -44,9 +44,9 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
         <div class="sidebar-brand-icon">
-         <img class="img-profile"  style="height: 5vh;" src="img/whitelogo.png">
+         <img class="img-profile"  style="height: 5vh;" src="img/test2.png">
         </div>
-        <div class="sidebar-brand-text mx-3">Asian College</div>
+        <div class="sidebar-brand-text mx-3"><img class="img-profile"  style="height: 4vh; margin-left: -1vw; margin-right: -1vw" src="img/test3.png"></div>
       </a>
 
       <!-- Divider -->
