@@ -147,61 +147,64 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid" style="padding-left: 0px!important; padding-right: 0px!important">
-
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Dashboard</h1>
           <!-- Content Row -->
+          <div id="alertContainer">
+            
+          </div>
           <div class="row">
-            <div class="col-md-12" style="background-image: url('img/dashboard1.png');background-position: center; background-repeat: no-repeat; background-size: cover;">
-              <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br>
+            <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
+                <?php 
+                      $stmt = $db->prepare("SELECT * FROM  course");
+                      $stmt->execute();
+                      $info = $stmt->get_result();
+                      echo '<select id="course" class="form-control " name="course" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
+                        ';
+                       while ($value = $info->fetch_assoc()) {
+                            echo "<option value=".$value['course_id']." >".$value['course_name']."</option>";
+                        }
+                      
+                         echo '</select>';
+                  ?>
             </div>
-            <div class="col-md-12" style="background-image: url('img/backgroundHats.jpg');background-position: center; background-repeat: no-repeat; background-size: cover;">
-              <br><br>
-              <div class="row">
-                <div class="col-md-2 offset-5">
-                  <center>
-                    <h1 style="color: white;">Academics</h1>
-                  </center>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                  <div class="col-md-4">
-                    <center>
-                      <img src="img/pic1.png">
-                      <label style="color:white; margin-left: 1vh; margin-right: 1vh;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</label>
-                    </center>
-                  </div>
-                  <div class="col-md-4">
-                    <center>
-                      <img src="img/pic2.png">
-                      <label style="color:white; margin-left: 1vh; margin-right: 1vh;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</label>
-                    </center>
-                  </div>
-                  <div class="col-md-4">
-                    <center>
-                      <img src="img/pic3.png" style="color:white; margin-left: 1vh; margin-right: 1vh;">
-                      <label style="color:white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</label>
-                    </center>
-                  </div>
-              </div>
-            </div>
+            <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
+                <select id="year" class="form-control " name="year" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
+                  <option value="1">First Year</option>
+                  <option value="2">Second Year</option>
+                  <option value="3">Third Year</option>
+                  <option value="4">Fourth Year</option>
+                  <option value="5">Fifth Year</option>
+                </select>
+           </div>
+           <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
+                <select id="semester" class="form-control " name="semester" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
+                  <option value="1">First Semester</option>
+                  <option value="2">Second Semester</option>
+                </select>
            </div>
 
+
+            </div>
+            <br>
+            <div class="row">
+                <div id="chartDiv">
+                    <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-bar">
+                        <canvas id="subjectStats"></canvas>
+                      </div>
+                      <hr>
+                      Number of Students per subject.
+                    </div>
+                  </div>
+                </div>
+                
+            </div>
           </div>
 
         <!-- /.container-fluid -->
@@ -257,19 +260,71 @@
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+  <script src="vendor/chart.js/Chart.min.js"></script>
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
+  <script type="text/javascript">
+
+        function getSubjectStats(){
+            var course = $('#course').val();
+            var year = $('#year').val();
+            var semester = $('#semester').val();
+            var subjectName = [];
+            var studentCount = [];
+            $.ajax({
+              type: "POST",
+              url: "php/request.php",
+              data: { action: "getSubjectStatistic",
+                      course: course,
+                      year: year,
+                      semester: semester},
+              success: function(response) {
+                if(response != 0){
+                   var obj = JSON.parse(response);
+                  
+                  console.log(obj);
+                   obj.forEach(el => {
+
+                      subjectName.push(el.subject);
+                      studentCount.push(el.count);
+
+                   });
+
+                    getStats(subjectName, studentCount);
+                    $('#chartDiv').css('display', 'block');
+                    $('#alert').trigger('click');
+                }else{
+                    console.log("No subject");
+                    $('#chartDiv').css('display', 'none');
+                    $('#alertContainer').html("<div  class='alert alert-danger alert-dismissible' role='alert' ><strong>No Subject<button type='button' class='close' data-dismiss='alert' aria-label='close'><span id='alert' aria-hidden='true'>&times;</span></button></div>");
+                }
+                 
+
+                }
+              
+            });
+        }
+
+        getSubjectStats();
+
+        $('#course').on('change',function(){
+          getSubjectStats();
+        });
+        $('#year').on('change',function(){
+          getSubjectStats();
+        });
+        $('#semester').on('change',function(){
+          getSubjectStats();
+        });
+        
+  </script>
+
+   <script src="js/stats.js"></script>
 
 </body>
 

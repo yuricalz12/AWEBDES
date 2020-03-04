@@ -791,4 +791,33 @@
                 </tr> 
               </tbody>';
 	}
+
+
+
+	//////GET SUBJECt
+
+
+
+	if($_POST['action'] == 'getSubjectStatistic'){
+		$stmt = $db->prepare("SELECT * FROM subject WHERE course_id = ? AND semester_id = ? AND year_level_id = ?");
+	  	$stmt->bind_param('iii', $_POST['course'], $_POST['semester'], $_POST['year']);
+	    $stmt->execute();
+	    $result = $stmt->get_result();
+	    $stats = array();
+	    if($result->num_rows > 0){
+		    while($subject = $result->fetch_assoc()){
+		    	$stmt2 = $db->prepare("SELECT DISTINCT user_id FROM schedule WHERE subject_id = ?");
+		    	$stmt2->bind_param('i', $subject['subject_id']);
+		    	$stmt2->execute();
+		    	$result2 = $stmt2->get_result();
+		    	$stats[] = array("subject" => $subject['subject_name'],
+		    					 "count" => $result2->num_rows);
+		    }
+		   echo json_encode($stats);
+		}else{
+			echo 0;
+		}
+
+	    
+	}
  ?>
