@@ -18,6 +18,7 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
+  <link href="css/bootstrap-multiselect.css" rel="stylesheet">
   
 </head>
 
@@ -66,11 +67,6 @@
       <div class="sidebar-heading">
         MAIN NAVIGATION
       </div>
-      <li class="nav-item">
-        <a class="nav-link" href="schedule.php">
-         <i class="fas fa-fw fa-calendar-plus "></i>
-          <span>Schedule Section</span></a>
-      </li>
       <li class="nav-item active">
         <a class="nav-link" href="schedule.php">
          <i class="fas fa-fw fa-calendar-plus "></i>
@@ -156,29 +152,28 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Schedule to students</h1>
+          <h1 class="h3 mb-2 text-gray-800">Schedule to multiple students</h1>
 
           <div id="alertContainer">
             
           </div>
           <!-- Content Row -->
-          <form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
             
             
             <div id="inputContainer" class="row">
                <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
                   <?php 
-                      $stmt = $db->prepare("SELECT * FROM  user WHERE user_type = 1");
+                      $stmt = $db->prepare("SELECT DISTINCT section_id from section_schedule");
                       $stmt->execute();
                       $info = $stmt->get_result();
-                      echo '<select id="student" class="form-control " name="student" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
-                        <option disabled selected="selected">Student Name</option>';
+                      echo '<select id="section" class="form-control " name="section" style="font-size: 0.8rem;height: 5vh;border-radius: 10rem; background:white;">
+                      <option disabled selected="selected">Section Name</option>';
                        while ($value = $info->fetch_assoc()) {
-                            $stmt = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
-                            $stmt->bind_param("s",$value['user_id']);
+                            $stmt = $db->prepare("SELECT * FROM  section WHERE section_id = ?");
+                            $stmt->bind_param("s",$value['section_id']);
                             $stmt->execute();
                             $user = $stmt->get_result()->fetch_assoc();
-                            echo "<option value=".$value['user_id']." >".$user['info_first_name']."</option>";
+                            echo "<option value=".$value['section_id']." >".$user['section_name']."</option>";
                         }
                       
                          echo '</select>';
@@ -188,40 +183,53 @@
                 </div>
 
                 <div class="col-sm-2 mb-1 mb-sm-0">
-                  <select id="subject" class="form-control " name="subject" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh; display:none; margin-bottom: 1vh">
-                    <option disabled selected="selected">Subject Name</option>
-                  </select>
+                     <?php 
+                      $stmt4 = $db->prepare("SELECT DISTINCT user_id FROM schedule");
+                      $stmt4->execute();
+                      $result = $stmt4->get_result();
+                      if($result->num_rows == 0){
+                          $stmt2 = $db->prepare("SELECT * FROM  user WHERE user_type = 1");
+                          $stmt2->execute();
+                          $info = $stmt2->get_result();
+                          echo '<select id="students" class="form-control " multiple="multiple" name="students" style="font-size: 0.8rem;height: 5vh; background:white;">';
+                           while ($value2 = $info->fetch_assoc()) {
+                                $stmt3 = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
+                                $stmt3->bind_param("s",$value2['user_id']);
+                                $stmt3->execute();
+                                $user = $stmt3->get_result()->fetch_assoc();
+                                echo "<option value=".$value2['user_id']." >".$user['info_first_name']."</option>";
+                            }
+                          
+                             echo '</select>';
+                      }else{
+                        while($value3 = $result->fetch_assoc()){
+                         $filter[] = $value3['user_id'];
+                        }
+                        $searchID = implode(',', $filter);
+
+                        $stmt2 = $db->prepare("SELECT * FROM  user WHERE user_id NOT IN (".$searchID.") AND user_type = 1");
+                        $stmt2->execute();
+                        $info = $stmt2->get_result();
+                        echo '<select id="students" class="form-control " multiple="multiple" name="students" style="font-size: 0.8rem;height: 5vh; background:white;">';
+                         while ($value2 = $info->fetch_assoc()) {
+                              $stmt3 = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
+                              $stmt3->bind_param("s",$value2['user_id']);
+                              $stmt3->execute();
+                              $user = $stmt3->get_result()->fetch_assoc();
+                              echo "<option value=".$value2['user_id']." >".$user['info_first_name']."</option>";
+                          }
+                        
+                           echo '</select>';
+                      }
+                      
+                      
+                  ?>
                 </div>
                 <div class="col-sm-2 mb-1 mb-sm-0">
-                  <select id="classType" class="form-control" name="classType" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh; display:none; margin-bottom: 1vh">
-                    <option disabled selected="selected">Class Type</option>
-                  </select>
-                </div>
-                <div class="col-sm-2 mb-1 mb-sm-0">
-                   <select id="day" class="form-control " name="day" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh; display:none; margin-bottom: 1vh">
-                     <option disabled selected="selected">Day</option>
-                   </select>
-                </div>
-                <div class="col-sm-2 mb-1 mb-sm-0">
-                   <select id="startTime" class="form-control " name="start" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh; display:none; margin-bottom: 1vh">
-                     <option disabled selected="selected">Start Time</option>
-                   </select>
-                </div>
-                <div class="col-sm-2 mb-1 mb-sm-0">
-                    <select id="endTime" class="form-control " name="end" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh; display:none; margin-bottom: 1vh">
-                      <option disabled selected="selected">End Time</option>
-                    </select>        
-                </div>
-                <div class="col-sm-2 mb-1 mb-sm-0">
-                  <select id="room" class="form-control " name="room" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh; display:none; margin-bottom: 1vh">
-                    <option disabled selected="selected">Room Name</option>
-                  </select>
-                </div>
-                <div class="col-sm-2 mb-1 mb-sm-0">
-                  <input id="submit" class="btn btn-primary btn-user btn-block" type="submit" name="submit" value="Submit" style="display:none;">
+                  <input id="submit" class="btn btn-primary btn-user btn-block" type="submit" name="submit" value="Submit">
                 </div>
             </div>
-         </form>
+   
 
           <div  class="row">
             <div class="col-md-10 ">
@@ -379,32 +387,6 @@
   </div>
 
 
- <?php
-
-  if(isset($_POST['submit'])){
-     $subject = $_POST['subject'];
-     $room = $_POST['room'];
-     $student = $_POST['student'];
-     $dpd =  $_SESSION['user_id'];
-     $classType = $_POST['classType'];
-     $day =  $_POST['day'];
-     $start_time = $_POST['start'];
-     $end_time =  $_POST['end'];
-     $stmt = $db->prepare("INSERT INTO schedule (subject_id, room_id, user_id, dpd_id, class_type, day, start_time_id, end_time_id) VALUES (?,?,?,?,?,?,?,?)");
-     $stmt->bind_param("iiiissii", $subject, $room, $student, $dpd, $classType, $day, $start_time, $end_time);
-        if($stmt->execute()){
-         
-        }else{
-        
-        }
-  }
-
-
- ?>
-
-
-
-
  <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -414,167 +396,27 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+  <script src="js/bootstrap-multiselect.js"></script>
 
  
 
   <script type="text/javascript">
-      
-    $('#student').on('change',function(){
-        var student = $('#student').val();
-        $.ajax({
-          type: "POST",
-          url: "php/request.php",
-          data: { action: "getSubject",
-                  student: student },
-          success: function(response) {
-              $('#subject').html(response);
-              $('#subject').css('display', 'block');
-              $('#table').css('display', 'block');
-
-               $('#submit').css('display', 'none');
-               $('#room').css('display', 'none');
-               $('#endTime').css('display', 'none');
-               $('#startTime').css('display', 'none'); 
-               $('#day').css('display', 'none'); 
-               $('#classType').css('display', 'none');
-
-              
-
-            
-          }
+    $(document).ready(function() {
+        $('#students').multiselect();
+      });
+     
+      $('#students').on('change',function(){
+            console.log( $('#students').val());
         });
-    });
 
-
-     $('#inputContainer').on('change', '#subject', function() {
-        $.ajax({
-           type: "POST",
-           url: "php/request.php",
-           data: { action: "getClassType"},
-           success: function(response) {
-               $('#classType').html(response);
-               $('#classType').css('display', 'block');  
-
-               $('#submit').css('display', 'none');
-               $('#room').css('display', 'none');
-               $('#endTime').css('display', 'none');
-               $('#startTime').css('display', 'none'); 
-               $('#day').css('display', 'none'); 
-            }
-           });
-
-    }); 
-
-      $('#inputContainer').on('change', '#classType', function() {
-        $.ajax({
-           type: "POST",
-           url: "php/request.php",
-           data: { action: "getDay"},
-           success: function(response) {
-               $('#day').html(response);
-               $('#day').css('display', 'block');
-
-               $('#submit').css('display', 'none');
-               $('#room').css('display', 'none');
-               $('#endTime').css('display', 'none');
-               $('#startTime').css('display', 'none');
-            }
-           });
-
-    }); 
-
-     $('#inputContainer').on('change', '#day', function() {
-        var student = $('#student').val();
-        $.ajax({
-           type: "POST",
-           url: "php/request.php",
-           data: { action: "getStartTime",
-                   student: student},
-           success: function(response) {
-               $('#startTime').html(response);
-               $('#startTime').css('display', 'block');
-               console.log(response);
-
-               $('#submit').css('display', 'none');
-               $('#room').css('display', 'none');
-               $('#endTime').css('display', 'none');
-
-            }
-           });
-
-    }); 
-
-     $('#inputContainer').on('change', '#startTime', function() {
-        var start = $('#startTime').val();
-        var subject = $('#subject').val();
-        var classType = $('#classType').val();
-        var student = $('#student').val();
-        $.ajax({
-           type: "POST",
-           url: "php/request.php",
-           data: { action: "getEndTime",
-                   start: start,
-                   subject: subject,
-                   classType: classType,
-                   student: student},
-           success: function(response) {
-                console.log(response);
-                if(response == 0){
-                   $('#alertContainer').html("<div class='alert alert-danger alert-dismissible' role='alert' ><strong>No more Lecture Time<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
-                }else if(response == 1){
-                   $('#alertContainer').html("<div class='alert alert-danger alert-dismissible' role='alert' ><strong>No more Laboratory Time<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
-                }else{
-                    $('#endTime').html(response);
-                    $('#endTime').css('display', 'block');
-              
-                    $('#submit').css('display', 'none');
-                    $('#room').css('display', 'none');
-                }
-             
-            }
-           });
-
-    }); 
-
-    $('#inputContainer').on('change', '#endTime', function() {
-        var start = $('#startTime').val();
-        var end = $('#endTime').val();
-        var subject = $('#subject').val();
-        var classType = $('#classType').val();
-        var student = $('#student').val();
-        var day = $('#day').val();
-       $.ajax({
-          type: "POST",
-          url: "php/request.php",
-          data: { action: "getRoom",
-                   start: start,
-                   end: end,
-                   subject: subject,
-                   classType: classType,
-                   student: student,
-                   day: day},
-          success: function(response) {
-
-              $('#room').html(response);
-              $('#room').css('display', 'block');
-              console.log(response);
-              $('#submit').css('display', 'none');
-          }
-        });
-    }); 
-
-     $('#inputContainer').on('change', '#room', function() {
-        $('#submit').css('display', 'block');
-          
-    }); 
-
-    $('#student').on('change',function(){
-        var student = $('#student').val();
+   
+    $('#section').on('change',function(){
+        var section = $('#section').val();
         $.ajax({
           type: "POST",
           url: "php/request.php",
-          data: { action: "getSchedule",
-                   student: student},
+          data: { action: "getSectionSchedule",
+                   section: section},
           beforeSend: function(){
             tableReset(); 
           },
@@ -585,6 +427,7 @@
                 $('#table').css('display', 'none');
                 $('#alertContainer').html("<div class='alert alert-danger alert-dismissible' role='alert' ><strong>No schedule<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
               }else{
+                 $('#table').css('display', 'block');
                   var obj = JSON.parse(response);
                   console.log(obj);
                    obj.forEach(el => {
@@ -622,7 +465,23 @@
         });
     }
 
-   
+    $('#submit').on('click',function(){
+        var students = $('#students').val();
+        var section = $('#section').val();
+        $.ajax({
+          type: "POST",
+          url: "php/request.php",
+          data: { action: "scheduleMultiple",
+                  students: students,
+                  section: section},
+          success: function(response){
+              if(response == 0){
+                location.reload(true);
+              }
+            }
+          
+        });
+    });
 
   </script>
     

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2020 at 01:09 AM
+-- Generation Time: Mar 09, 2020 at 03:30 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -39,8 +39,8 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`course_id`, `department_id`, `course_name`) VALUES
-(1, 1, 'Course1'),
-(2, 2, 'Course2');
+(1, 1, 'Information Technology'),
+(2, 2, 'Computer Science');
 
 -- --------------------------------------------------------
 
@@ -103,19 +103,24 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`schedule_id`, `subject_id`, `room_id`, `user_id`, `dpd_id`, `class_type`, `day`, `start_time_id`, `end_time_id`) VALUES
-(6, 1, 1, 15, 17, 'laboratory', 'monday', 7, 9),
-(10, 1, 1, 15, 17, 'lecture', 'monday', 3, 5),
-(13, 2, 1, 15, 17, 'laboratory', 'monday', 15, 17),
-(14, 1, 2, 16, 17, 'lecture', 'monday', 1, 5),
-(15, 2, 2, 16, 17, 'lecture', 'monday', 5, 11),
-(16, 2, 1, 15, 17, 'lecture', 'monday', 17, 23),
-(17, 1, 1, 15, 17, 'lecture', 'monday', 1, 3),
-(18, 1, 1, 15, 17, 'lecture', 'monday', 1, 3),
-(19, 1, 1, 15, 17, 'lecture', 'monday', 1, 3),
-(20, 1, 1, 15, 17, 'lecture', 'monday', 1, 3),
-(21, 1, 1, 15, 17, 'lecture', 'monday', 1, 3),
-(22, 2, 1, 16, 17, 'laboratory', 'monday', 11, 13),
-(23, 1, 2, 16, 17, 'laboratory', 'monday', 13, 15);
+(36, 1, 1, 15, 17, 'lecture', 'monday', 1, 3),
+(37, 2, 1, 15, 17, 'lecture', 'monday', 5, 9),
+(38, 1, 1, 15, 17, 'laboratory', 'monday', 3, 5),
+(39, 1, 1, 15, 17, 'lecture', 'monday', 9, 11),
+(40, 1, 1, 15, 17, 'laboratory', 'monday', 13, 17),
+(41, 2, 1, 15, 17, 'laboratory', 'monday', 17, 23),
+(42, 1, 1, 23, 17, 'lecture', 'monday', 1, 3),
+(43, 2, 1, 23, 17, 'lecture', 'monday', 5, 9),
+(44, 1, 1, 23, 17, 'laboratory', 'monday', 3, 5),
+(45, 1, 1, 23, 17, 'lecture', 'monday', 9, 11),
+(46, 1, 1, 23, 17, 'laboratory', 'monday', 13, 17),
+(47, 2, 1, 23, 17, 'laboratory', 'monday', 17, 23),
+(48, 1, 1, 24, 17, 'lecture', 'monday', 1, 3),
+(49, 2, 1, 24, 17, 'lecture', 'monday', 5, 9),
+(50, 1, 1, 24, 17, 'laboratory', 'monday', 3, 5),
+(51, 1, 1, 24, 17, 'lecture', 'monday', 9, 11),
+(52, 1, 1, 24, 17, 'laboratory', 'monday', 13, 17),
+(53, 2, 1, 24, 17, 'laboratory', 'monday', 17, 23);
 
 -- --------------------------------------------------------
 
@@ -127,6 +132,50 @@ CREATE TABLE `section` (
   `section_id` int(11) NOT NULL,
   `section_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `section`
+--
+
+INSERT INTO `section` (`section_id`, `section_name`) VALUES
+(1, 'BSIT-191'),
+(2, 'BSIT-192'),
+(3, 'BSIT-181'),
+(4, 'BSIT-182'),
+(5, 'BSIT-171'),
+(6, 'BSIT-172'),
+(7, 'BSIT-161'),
+(8, 'BSIT-162');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `section_schedule`
+--
+
+CREATE TABLE `section_schedule` (
+  `schedule_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
+  `dpd_id` int(11) NOT NULL,
+  `class_type` varchar(50) NOT NULL,
+  `day` varchar(50) NOT NULL,
+  `start_time_id` int(11) NOT NULL,
+  `end_time_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `section_schedule`
+--
+
+INSERT INTO `section_schedule` (`schedule_id`, `subject_id`, `room_id`, `section_id`, `dpd_id`, `class_type`, `day`, `start_time_id`, `end_time_id`) VALUES
+(1, 1, 1, 1, 17, 'lecture', 'monday', 1, 3),
+(3, 2, 1, 1, 17, 'lecture', 'monday', 5, 9),
+(5, 1, 1, 1, 17, 'laboratory', 'monday', 3, 5),
+(6, 1, 1, 1, 17, 'lecture', 'monday', 9, 11),
+(7, 1, 1, 1, 17, 'laboratory', 'monday', 13, 17),
+(8, 2, 1, 1, 17, 'laboratory', 'monday', 17, 23);
 
 -- --------------------------------------------------------
 
@@ -224,7 +273,9 @@ INSERT INTO `user` (`user_id`, `user_email`, `user_password`, `department_id`, `
 (15, 'yurelle624@gmail.com', '$2y$10$BEYL/.FLPP6J5UdPRngkvO/wmg3XCdT0XwyM7rc4806kMqmLwn3yu', 1, 1, 1),
 (16, 'johndoe@gmail.com', '$2y$10$mbKiyg3hzM0Q7irekW2gXe2yCy.MM9hsgRFYGiE4eRKQZ4wS4Md2.', 1, 0, 2),
 (17, 'janedoe@gmail.com', '$2y$10$rcgr6DrCjxF6LWh8GUQLbeJ5yYcByJXvb0dWGtcWbcL0b3aa8xu1e', 2, 0, 3),
-(18, 'test@gmail.com', '$2y$10$NOuSgFH03vonDxTKylt.TeihSBHGgKQL54vrkyAGqbNV.w3uaQcPy', 1, 1, 1);
+(18, 'test@gmail.com', '$2y$10$NOuSgFH03vonDxTKylt.TeihSBHGgKQL54vrkyAGqbNV.w3uaQcPy', 1, 1, 1),
+(23, 'student1@gmail.com', '$2y$10$TUrOwpFXOERLfjzBzKBaZ.Nf71Dk.Y4JKDG9nsoT5gvNanhmBH.1O', 1, 1, 1),
+(24, 'student2@gmail.com', '$2y$10$EQjQ2kJrEXYTINcIa.4/0un6kmN91nCuwOR9B9rni1eBmI7j8Wd2G', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -251,7 +302,9 @@ INSERT INTO `user_information` (`info_id`, `user_id`, `info_first_name`, `info_l
 (6, 15, 'Judge Yuri', 'Calumpang', 'Gomez St.', 'Male', '1997-01-01', 'img/Male.png'),
 (7, 16, 'John', 'Doe', 'Dumaguete', 'Male', '1995-04-04', 'img/Male.png'),
 (8, 17, 'Jane', 'Doe', 'Dumaguete', 'Female', '1997-03-21', 'img/Female.png'),
-(9, 18, 'Yuri', 'Calz', 'Gomez St.', 'Male', '1995-01-01', 'img/Male.png');
+(9, 18, 'Yuri', 'Calz', 'Gomez St.', 'Male', '1995-01-01', 'img/Male.png'),
+(10, 23, 'Loren', 'Mathews', 'Dumaguete', 'Male', '1997-11-05', 'img/Male.png'),
+(11, 24, 'Trevor', 'Heath', 'Dumaguete', 'Male', '1998-12-05', 'img/Male.png');
 
 --
 -- Indexes for dumped tables
@@ -286,6 +339,12 @@ ALTER TABLE `schedule`
 --
 ALTER TABLE `section`
   ADD PRIMARY KEY (`section_id`);
+
+--
+-- Indexes for table `section_schedule`
+--
+ALTER TABLE `section_schedule`
+  ADD PRIMARY KEY (`schedule_id`);
 
 --
 -- Indexes for table `subject`
@@ -337,13 +396,19 @@ ALTER TABLE `room`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `section`
 --
 ALTER TABLE `section`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `section_schedule`
+--
+ALTER TABLE `section_schedule`
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -361,13 +426,13 @@ ALTER TABLE `time`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user_information`
 --
 ALTER TABLE `user_information`
-  MODIFY `info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
