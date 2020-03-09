@@ -67,9 +67,19 @@
         MAIN NAVIGATION
       </div>
       <li class="nav-item">
+        <a class="nav-link" href="scheduleSection.php">
+         <i class="fas fa-fw fa-calendar-plus "></i>
+          <span>Schedule Section</span></a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="schedule.php">
          <i class="fas fa-fw fa-calendar-plus "></i>
           <span>Schedule Student</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="scheduleMultiple.php">
+         <i class="fas fa-fw fa-calendar-plus "></i>
+          <span>Assign Students to Section</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="scheduleTeacher.php">

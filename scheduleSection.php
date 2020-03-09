@@ -66,12 +66,12 @@
       <div class="sidebar-heading">
         MAIN NAVIGATION
       </div>
-      <li class="nav-item">
-        <a class="nav-link" href="schedule.php">
+      <li class="nav-item active">
+        <a class="nav-link" href="scheduleSection.php">
          <i class="fas fa-fw fa-calendar-plus "></i>
           <span>Schedule Section</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="schedule.php">
          <i class="fas fa-fw fa-calendar-plus "></i>
           <span>Schedule Student</span></a>
@@ -156,7 +156,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Schedule to students</h1>
+          <h1 class="h3 mb-2 text-gray-800">Schedule to Section</h1>
 
           <div id="alertContainer">
             
@@ -168,17 +168,13 @@
             <div id="inputContainer" class="row">
                <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
                   <?php 
-                      $stmt = $db->prepare("SELECT * FROM  user WHERE user_type = 1");
+                      $stmt = $db->prepare("SELECT * FROM  section");
                       $stmt->execute();
                       $info = $stmt->get_result();
-                      echo '<select id="student" class="form-control " name="student" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
-                        <option disabled selected="selected">Student Name</option>';
+                      echo '<select id="section" class="form-control " name="section" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
+                        <option disabled selected="selected">Section Name</option>';
                        while ($value = $info->fetch_assoc()) {
-                            $stmt = $db->prepare("SELECT * FROM  user_information WHERE user_id = ?");
-                            $stmt->bind_param("s",$value['user_id']);
-                            $stmt->execute();
-                            $user = $stmt->get_result()->fetch_assoc();
-                            echo "<option value=".$value['user_id']." >".$user['info_first_name']."</option>";
+                            echo "<option value=".$value['section_id']." >".$value['section_name']."</option>";
                         }
                       
                          echo '</select>';
@@ -384,14 +380,14 @@
   if(isset($_POST['submit'])){
      $subject = $_POST['subject'];
      $room = $_POST['room'];
-     $student = $_POST['student'];
+     $section = $_POST['section'];
      $dpd =  $_SESSION['user_id'];
      $classType = $_POST['classType'];
      $day =  $_POST['day'];
      $start_time = $_POST['start'];
      $end_time =  $_POST['end'];
-     $stmt = $db->prepare("INSERT INTO schedule (subject_id, room_id, user_id, dpd_id, class_type, day, start_time_id, end_time_id) VALUES (?,?,?,?,?,?,?,?)");
-     $stmt->bind_param("iiiissii", $subject, $room, $student, $dpd, $classType, $day, $start_time, $end_time);
+     $stmt = $db->prepare("INSERT INTO section_schedule (subject_id, room_id, section_id, dpd_id, class_type, day, start_time_id, end_time_id) VALUES (?,?,?,?,?,?,?,?)");
+     $stmt->bind_param("iiiissii", $subject, $room, $section, $dpd, $classType, $day, $start_time, $end_time);
         if($stmt->execute()){
          
         }else{
@@ -419,13 +415,11 @@
 
   <script type="text/javascript">
       
-    $('#student').on('change',function(){
-        var student = $('#student').val();
+    $('#section').on('change',function(){
         $.ajax({
           type: "POST",
           url: "php/request.php",
-          data: { action: "getSubject",
-                  student: student },
+          data: { action: "getSectionSubject" },
           success: function(response) {
               $('#subject').html(response);
               $('#subject').css('display', 'block');
@@ -484,12 +478,12 @@
     }); 
 
      $('#inputContainer').on('change', '#day', function() {
-        var student = $('#student').val();
+        var section = $('#section').val();
         $.ajax({
            type: "POST",
            url: "php/request.php",
-           data: { action: "getStartTime",
-                   student: student},
+           data: { action: "getSectionStartTime",
+                   section: section},
            success: function(response) {
                $('#startTime').html(response);
                $('#startTime').css('display', 'block');
@@ -508,15 +502,15 @@
         var start = $('#startTime').val();
         var subject = $('#subject').val();
         var classType = $('#classType').val();
-        var student = $('#student').val();
+        var section = $('#section').val();
         $.ajax({
            type: "POST",
            url: "php/request.php",
-           data: { action: "getEndTime",
+           data: { action: "getSectionEndTime",
                    start: start,
                    subject: subject,
                    classType: classType,
-                   student: student},
+                   section: section},
            success: function(response) {
                 console.log(response);
                 if(response == 0){
@@ -541,17 +535,17 @@
         var end = $('#endTime').val();
         var subject = $('#subject').val();
         var classType = $('#classType').val();
-        var student = $('#student').val();
+        var section = $('#section').val();
         var day = $('#day').val();
        $.ajax({
           type: "POST",
           url: "php/request.php",
-          data: { action: "getRoom",
+          data: { action: "getSectionRoom",
                    start: start,
                    end: end,
                    subject: subject,
                    classType: classType,
-                   student: student,
+                   section: section,
                    day: day},
           success: function(response) {
 
@@ -568,13 +562,13 @@
           
     }); 
 
-    $('#student').on('change',function(){
-        var student = $('#student').val();
+    $('#section').on('change',function(){
+        var section = $('#section').val();
         $.ajax({
           type: "POST",
           url: "php/request.php",
-          data: { action: "getSchedule",
-                   student: student},
+          data: { action: "getSectionSchedule",
+                   section: section},
           beforeSend: function(){
             tableReset(); 
           },
@@ -609,7 +603,7 @@
             }
           
         });
-    }); 
+    });
     function tableReset(){
       $.ajax({
           type: "POST",

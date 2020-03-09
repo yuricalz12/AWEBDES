@@ -28,7 +28,7 @@
 
     if(isset($_POST['submit'])){
       $email = $db->real_escape_string($_POST['email']);
-      $password = $db->real_escape_string($_POST['password']);
+      $password = password_hash($db->real_escape_string($_POST['password']), PASSWORD_BCRYPT );
       $confirmPassword = $db->real_escape_string($_POST['confirmPassword']);
       $firstName = $db->real_escape_string($_POST['firstName']);
       $lastName = $db->real_escape_string($_POST['lastName']);
@@ -39,7 +39,7 @@
       $gender = $db->real_escape_string($_POST['gender']);
       $dob = $db->real_escape_string($_POST['dob']);
 
-      $stmt = $db->prepare("SELECT * FROM  user WHERE email = ?");
+      $stmt = $db->prepare("SELECT * FROM  user WHERE user_email = ?");
       $stmt->bind_param("s",$email);
       $stmt->execute();
       $result = $stmt->get_result();
@@ -54,10 +54,10 @@
                       Password do not match.
                     </div>";
         }else{
-          $stmt = $db->prepare("INSERT INTO user (email, password, department, course, type) VALUES (?,?,?,?,?)");
-          $stmt->bind_param("ssiii", $email, password_hash($password, PASSWORD_BCRYPT ), $department, $course, $type);
+          $stmt = $db->prepare("INSERT INTO user (user_email, user_password, department_id, course_id, user_type) VALUES (?,?,?,?,?)");
+          $stmt->bind_param("ssiii", $email, $password, $department, $course, $type);
           if($stmt->execute()){
-             $stmt = $db->prepare("SELECT * FROM  user WHERE email = ?");
+             $stmt = $db->prepare("SELECT * FROM  user WHERE user_email = ?");
              $stmt->bind_param("s",$email);
              $stmt->execute();
              $result = $stmt->get_result()->fetch_assoc();
@@ -67,8 +67,8 @@
               $profile = "img/Female.png";
              }
 
-             $stmt2 = $db->prepare("INSERT INTO user_information (user_id, first_name, last_name, address, gender, dob, profile_picture) VALUES (?,?,?,?,?,?,?)");
-             $stmt2->bind_param("issssss", $result['id'], $firstName, $lastName, $address, $gender, $dob, $profile);
+             $stmt2 = $db->prepare("INSERT INTO user_information (user_id, info_first_name, info_last_name, info_address, info_gender, info_dob, info_profile_picture) VALUES (?,?,?,?,?,?,?)");
+             $stmt2->bind_param("issssss", $result['user_id'], $firstName, $lastName, $address, $gender, $dob, $profile);
              if($stmt2->execute()){
                 header('location: index.php');
              }
