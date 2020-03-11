@@ -42,7 +42,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboardAdmin.php">
         <div class="sidebar-brand-icon">
          <img class="img-profile"  style="height: 5vh;" src="img/test2.png">
         </div>
@@ -54,9 +54,9 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="dashboard.php">
+        <a class="nav-link" href="dashboardAdmin.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard Student</span></a>
+          <span>Dashboard Admin</span></a>
       </li>
 
       <!-- Divider -->
@@ -67,9 +67,19 @@
         MAIN NAVIGATION
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="viewScheduleStudent.php">
+        <a class="nav-link" href="registerTeacher.php">
          <i class="fas fa-fw fa-cog"></i>
-          <span>View schedule</span></a>
+          <span>Register Teacher</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registerDPD.php">
+         <i class="fas fa-fw fa-cog"></i>
+          <span>Register DPD</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="newRoom.php">
+         <i class="fas fa-fw fa-cog"></i>
+          <span>Add new Room</span></a>
       </li>
 
       <!-- Divider -->
@@ -82,7 +92,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="profile.php">
+        <a class="nav-link" href="profileAdmin.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>Profile</span></a>
       </li>
@@ -146,7 +156,6 @@
         <div class="container-fluid">
 
           
-          
           <br>
           <!-- Content Row -->
           <div class="row">
@@ -167,7 +176,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <a href="viewStudent.php?search=students" class="btn btn-primary btn-icon-split">
+                        <a href="view.php?search=students" class="btn btn-primary btn-icon-split">
                           <span class="icon text-white-50">
                             <i class="fas fa-info-circle"></i>
                           </span>
@@ -196,7 +205,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <a href="viewStudent.php?search=teachers" class="btn btn-primary btn-icon-split">
+                        <a href="view.php?search=teachers" class="btn btn-primary btn-icon-split">
                           <span class="icon text-white-50">
                             <i class="fas fa-info-circle"></i>
                           </span>
@@ -225,7 +234,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <a href="viewStudent.php?search=subject" class="btn btn-primary btn-icon-split">
+                        <a href="view.php?search=subject" class="btn btn-primary btn-icon-split">
                           <span class="icon text-white-50">
                             <i class="fas fa-info-circle"></i>
                           </span>
@@ -254,7 +263,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <a href="viewStudent.php?search=section" class="btn btn-primary btn-icon-split">
+                        <a href="view.php?search=section" class="btn btn-primary btn-icon-split">
                           <span class="icon text-white-50">
                             <i class="fas fa-info-circle"></i>
                           </span>
@@ -285,7 +294,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <a href="viewStudent.php?search=classroom" class="btn btn-primary btn-icon-split">
+                        <a href="view.php?search=classroom" class="btn btn-primary btn-icon-split">
                           <span class="icon text-white-50">
                             <i class="fas fa-info-circle"></i>
                           </span>
@@ -314,7 +323,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <a href="viewStudent.php?search=courses" class="btn btn-primary btn-icon-split">
+                        <a href="view.php?search=courses" class="btn btn-primary btn-icon-split">
                           <span class="icon text-white-50">
                             <i class="fas fa-info-circle"></i>
                           </span>
@@ -343,7 +352,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <a href="viewStudent.php?search=departments" class="btn btn-primary btn-icon-split">
+                        <a href="view.php?search=departments" class="btn btn-primary btn-icon-split">
                           <span class="icon text-white-50">
                             <i class="fas fa-info-circle"></i>
                           </span>
@@ -356,6 +365,8 @@
               </div>
 
             </div>
+
+          
 
         </div>
         <!-- /.container-fluid -->

@@ -42,7 +42,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboardDPD.php">
         <div class="sidebar-brand-icon">
          <img class="img-profile"  style="height: 5vh;" src="img/test2.png">
         </div>
@@ -54,7 +54,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="dashboard.php">
+        <a class="nav-link" href="dashboardDPD.php">
           <i class="fas fa-columns"></i>
           <span>Dashboard DPD</span></a>
       </li>
@@ -96,8 +96,8 @@
       </div>
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="profile.php">
+      <li class="nav-item ">
+        <a class="nav-link" href="profileDPD.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>Profile</span></a>
       </li>
@@ -158,63 +158,218 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Dashboard</h1>
+          
+          <br>
           <!-- Content Row -->
-          <div id="alertContainer">
-            
-          </div>
           <div class="row">
-            <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
-                <?php 
-                      $stmt = $db->prepare("SELECT * FROM  course");
-                      $stmt->execute();
-                      $info = $stmt->get_result();
-                      echo '<select id="course" class="form-control " name="course" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
-                        ';
-                       while ($value = $info->fetch_assoc()) {
-                            echo "<option value=".$value['course_id']." >".$value['course_name']."</option>";
-                        }
-                      
-                         echo '</select>';
-                  ?>
-            </div>
-            <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
-                <select id="year" class="form-control " name="year" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
-                  <option value="1">First Year</option>
-                  <option value="2">Second Year</option>
-                  <option value="3">Third Year</option>
-                  <option value="4">Fourth Year</option>
-                  <option value="5">Fifth Year</option>
-                </select>
-           </div>
-           <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
-                <select id="semester" class="form-control " name="semester" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
-                  <option value="1">First Semester</option>
-                  <option value="2">Second Semester</option>
-                </select>
-           </div>
+              <div class="col-xl-3 col-md-6 mb-4" style="margin-bottom: 2vh !important;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Students</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <?php
+                            $stmt = $db->prepare("SELECT * FROM  user WHERE user_type = 1");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            echo $result->num_rows;
 
-
-            </div>
-            <br>
-            <div class="row">
-                <div id="chartDiv">
-                    <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-                    </div>
-                    <div class="card-body">
-                      <div class="chart-bar">
-                        <canvas id="subjectStats"></canvas>
+                          ?>
+                        </div>
                       </div>
-                      <hr>
-                      Number of Students per subject.
+                      <div class="col-auto">
+                        <a href="viewDPD.php?search=students" class="btn btn-primary btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <span class="text">View</span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-                
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4" style="margin-bottom: 2vh !important;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Teachers</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <?php
+                            $stmt = $db->prepare("SELECT * FROM  user WHERE user_type = 2");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            echo $result->num_rows;
+
+                          ?>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="viewDPD.php?search=teachers" class="btn btn-primary btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <span class="text">View</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4" style="margin-bottom: 2vh !important;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Subjects</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <?php
+                            $stmt = $db->prepare("SELECT * FROM  subject");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            echo $result->num_rows;
+
+                          ?>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="viewDPD.php?search=subject" class="btn btn-primary btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <span class="text">View</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4" style="margin-bottom: 2vh !important;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Sections</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <?php
+                            $stmt = $db->prepare("SELECT * FROM  section");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            echo $result->num_rows;
+
+                          ?>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="viewDPD.php?search=section" class="btn btn-primary btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <span class="text">View</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+           </div>
+            <div class="row">
+
+              <div class="col-xl-3 col-md-6 mb-4" style="margin-bottom: 2vh !important;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Classroom</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <?php
+                            $stmt = $db->prepare("SELECT * FROM  room");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            echo $result->num_rows;
+                          ?>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="viewDPD.php?search=classroom" class="btn btn-primary btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <span class="text">View</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+               <div class="col-xl-3 col-md-6 mb-4" style="margin-bottom: 2vh !important;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Courses</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <?php
+                            $stmt = $db->prepare("SELECT * FROM  course");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            echo $result->num_rows;
+
+                          ?>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="viewDPD.php?search=courses" class="btn btn-primary btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <span class="text">View</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+               <div class="col-xl-3 col-md-6 mb-4" style="margin-bottom: 2vh !important;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Departments</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <?php
+                            $stmt = $db->prepare("SELECT * FROM  department");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            echo $result->num_rows;
+
+                          ?>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="viewDPD.php?search=departments" class="btn btn-primary btn-icon-split">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                          </span>
+                          <span class="text">View</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
+
+          
           </div>
 
         <!-- /.container-fluid -->
@@ -280,57 +435,6 @@
 
   <script type="text/javascript">
 
-        function getSubjectStats(){
-            var course = $('#course').val();
-            var year = $('#year').val();
-            var semester = $('#semester').val();
-            var subjectName = [];
-            var studentCount = [];
-            $.ajax({
-              type: "POST",
-              url: "php/request.php",
-              data: { action: "getSubjectStatistic",
-                      course: course,
-                      year: year,
-                      semester: semester},
-              success: function(response) {
-                if(response != 0){
-                   var obj = JSON.parse(response);
-                  
-                  console.log(obj);
-                   obj.forEach(el => {
-
-                      subjectName.push(el.subject);
-                      studentCount.push(el.count);
-
-                   });
-
-                    getStats(subjectName, studentCount);
-                    $('#chartDiv').css('display', 'block');
-                    $('#alert').trigger('click');
-                }else{
-                    console.log("No subject");
-                    $('#chartDiv').css('display', 'none');
-                    $('#alertContainer').html("<div  class='alert alert-danger alert-dismissible' role='alert' ><strong>No Subject<button type='button' class='close' data-dismiss='alert' aria-label='close'><span id='alert' aria-hidden='true'>&times;</span></button></div>");
-                }
-                 
-
-                }
-              
-            });
-        }
-
-        getSubjectStats();
-
-        $('#course').on('change',function(){
-          getSubjectStats();
-        });
-        $('#year').on('change',function(){
-          getSubjectStats();
-        });
-        $('#semester').on('change',function(){
-          getSubjectStats();
-        });
         
   </script>
 
