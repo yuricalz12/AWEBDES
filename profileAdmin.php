@@ -42,7 +42,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboardAdmin.php">
         <div class="sidebar-brand-icon">
          <img class="img-profile"  style="height: 5vh;" src="img/test2.png">
         </div>
@@ -54,9 +54,9 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="dashboard.php">
+        <a class="nav-link" href="dashboardAdmin.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard Student</span></a>
+          <span>Dashboard Admin</span></a>
       </li>
 
       <!-- Divider -->
@@ -67,9 +67,19 @@
         MAIN NAVIGATION
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="viewScheduleStudent.php">
+        <a class="nav-link" href="registerTeacher.php">
          <i class="fas fa-fw fa-cog"></i>
-          <span>View schedule</span></a>
+          <span>Register Teacher</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registerDPD.php">
+         <i class="fas fa-fw fa-cog"></i>
+          <span>Register DPD</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="newRoom.php">
+         <i class="fas fa-fw fa-cog"></i>
+          <span>Add new Room</span></a>
       </li>
 
       <!-- Divider -->
@@ -82,7 +92,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item active">
-        <a class="nav-link" href="profile.php">
+        <a class="nav-link" href="profileAdmin.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>Profile</span></a>
       </li>
@@ -156,7 +166,6 @@
               $stmt->execute();
 
               echo "<div class='alert alert-success alert-dismissible' role='alert' ><strong>Successfuly updated your information<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
-              
             }
 
           ?>

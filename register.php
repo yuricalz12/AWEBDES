@@ -45,14 +45,10 @@
       $result = $stmt->get_result();
 
       if ($result->num_rows > 0) {
-          $error = "<div class='alert alert-danger' role='alert'>
-                      Email already been used.
-                    </div>";
+           echo "<div class='alert alert-danger alert-dismissible' role='alert' ><strong>Email already in used<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
       }else{
         if($_POST['password'] != $_POST['confirmPassword']){
-          $error = "<div class='alert alert-danger' role='alert'>
-                      Password do not match.
-                    </div>";
+          echo "<div class='alert alert-danger alert-dismissible' role='alert' ><strong>Password do not match<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
         }else{
           $stmt = $db->prepare("INSERT INTO user (user_email, user_password, department_id, course_id, user_type) VALUES (?,?,?,?,?)");
           $stmt->bind_param("ssiii", $email, $password, $department, $course, $type);

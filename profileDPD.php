@@ -42,7 +42,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboardDPD.php">
         <div class="sidebar-brand-icon">
          <img class="img-profile"  style="height: 5vh;" src="img/test2.png">
         </div>
@@ -54,9 +54,9 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="dashboard.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard Student</span></a>
+        <a class="nav-link" href="dashboardDPD.php">
+          <i class="fas fa-columns"></i>
+          <span>Dashboard DPD</span></a>
       </li>
 
       <!-- Divider -->
@@ -67,9 +67,24 @@
         MAIN NAVIGATION
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="viewScheduleStudent.php">
-         <i class="fas fa-fw fa-cog"></i>
-          <span>View schedule</span></a>
+        <a class="nav-link" href="scheduleSection.php">
+         <i class="fas fa-fw fa-calendar-plus "></i>
+          <span>Schedule Section</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="schedule.php">
+         <i class="fas fa-fw fa-calendar-plus "></i>
+          <span>Schedule Student</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="scheduleMultiple.php">
+         <i class="fas fa-fw fa-calendar-plus "></i>
+          <span>Assign Students to Section</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="scheduleTeacher.php">
+         <i class="fas fa-fw fa-calendar-plus "></i>
+          <span>Schedule Teacher</span></a>
       </li>
 
       <!-- Divider -->
@@ -82,7 +97,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item active">
-        <a class="nav-link" href="profile.php">
+        <a class="nav-link" href="profileDPD.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>Profile</span></a>
       </li>

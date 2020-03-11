@@ -42,7 +42,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboardAdmin.php">
         <div class="sidebar-brand-icon">
          <img class="img-profile"  style="height: 5vh;" src="img/test2.png">
         </div>
@@ -54,9 +54,9 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="dashboard.php">
+        <a class="nav-link" href="dashboardAdmin.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard Student</span></a>
+          <span>Dashboard Admin</span></a>
       </li>
 
       <!-- Divider -->
@@ -67,9 +67,19 @@
         MAIN NAVIGATION
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="viewScheduleStudent.php">
+        <a class="nav-link" href="registerTeacher.php">
          <i class="fas fa-fw fa-cog"></i>
-          <span>View schedule</span></a>
+          <span>Register Teacher</span></a>
+      </li>
+      <li class="nav-item  active">
+        <a class="nav-link" href="registerDPD.php">
+         <i class="fas fa-fw fa-cog"></i>
+          <span>Register DPD</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="newRoom.php">
+         <i class="fas fa-fw fa-cog"></i>
+          <span>Add new Room</span></a>
       </li>
 
       <!-- Divider -->
@@ -81,7 +91,7 @@
       </div>
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="profile.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>Profile</span></a>
@@ -114,9 +124,10 @@
             <i class="fa fa-bars"></i>
           </button>
 
-         
+          <h2>Subject and Room Management System</h2>
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
+
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -145,70 +156,97 @@
         <div class="container-fluid">
           <?php
             if(isset($_POST['submit'])){
+              $email = $db->real_escape_string($_POST['email']);
+              $password = password_hash($db->real_escape_string($_POST['password']), PASSWORD_BCRYPT );
+              $confirmPassword = $db->real_escape_string($_POST['confirmPassword']);
               $firstName = $db->real_escape_string($_POST['firstName']);
               $lastName = $db->real_escape_string($_POST['lastName']);
+              $department = 0;
+              $type = 3;
+              $course = 0;
               $address = $db->real_escape_string($_POST['address']);
               $gender = $db->real_escape_string($_POST['gender']);
               $dob = $db->real_escape_string($_POST['dob']);
 
-              $stmt = $db->prepare("UPDATE user_information SET info_first_name = ?, info_last_name = ?, info_address = ?, info_gender = ?, info_dob = ? WHERE user_id = ?");
-              $stmt->bind_param("sssssi",$firstName, $lastName, $address, $gender, $dob, $_SESSION['user_id']);
+              $stmt = $db->prepare("SELECT * FROM  user WHERE user_email = ?");
+              $stmt->bind_param("s",$email);
               $stmt->execute();
+              $result = $stmt->get_result();
 
-              echo "<div class='alert alert-success alert-dismissible' role='alert' ><strong>Successfuly updated your information<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
+              if ($result->num_rows > 0) {
+                  echo "<div class='alert alert-danger alert-dismissible' role='alert' ><strong>Email already in used<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
+              }else{
+                if($_POST['password'] != $_POST['confirmPassword']){
+                  echo "<div class='alert alert-danger alert-dismissible' role='alert' ><strong>Password do not match<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
+                }else{
+                  $stmt = $db->prepare("INSERT INTO user (user_email, user_password, department_id, course_id, user_type) VALUES (?,?,?,?,?)");
+                  $stmt->bind_param("ssiii", $email, $password, $department, $course, $type);
+                  if($stmt->execute()){
+                     $stmt = $db->prepare("SELECT * FROM  user WHERE user_email = ?");
+                     $stmt->bind_param("s",$email);
+                     $stmt->execute();
+                     $result = $stmt->get_result()->fetch_assoc();
+                     if($gender == "Male"){
+                      $profile = "img/Male.png";
+                     }else{
+                      $profile = "img/Female.png";
+                     }
+
+                     $stmt2 = $db->prepare("INSERT INTO user_information (user_id, info_first_name, info_last_name, info_address, info_gender, info_dob, info_profile_picture) VALUES (?,?,?,?,?,?,?)");
+                     $stmt2->bind_param("issssss", $result['user_id'], $firstName, $lastName, $address, $gender, $dob, $profile);
+                     if($stmt2->execute()){
+                         echo "<div class='alert alert-success alert-dismissible' role='alert' ><strong>DPD successfuly added<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
+                     }
+                  }
+                }
+              } 
               
             }
 
           ?>
 
+          <br>
           <!-- Content Row -->
           <form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
           <div class="row">
-              <br>
-              <div class="col-md-2 offset-1">
-                <img class="img-profile rounded-circle" src="<?php echo $info['info_profile_picture'] ?>">
-              </div>
-           </div>
-           <br>
-           <div class="row">
-             <div class="col-sm-2 mb-1 mb-sm-0">
-                  <input type="text" id="room" class="form-control " name="firstName" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="First Name" value="<?php echo $info['info_first_name'] ?>">
+             
+                 <div class="col-sm-2 mb-1 mb-sm-0">
+                  <input type="text" id="room" class="form-control " name="firstName" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="First Name">
                 </div>
                 <div class="col-sm-2 mb-1 mb-sm-0">
-                  <input type="text" id="room" class="form-control " name="lastName" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="Last Name" value="<?php echo $info['info_last_name'] ?>">
+                  <input type="text" id="room" class="form-control " name="lastName" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="Last Name">
                 </div>
                 <div class="col-sm-2 mb-1 mb-sm-0">
-                  <input type="text" id="text" class="form-control " name="address" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="Address" value="<?php echo $info['info_address'] ?>">
+                  <input type="email" id="room" class="form-control " name="email" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="Email Address">
                 </div>
-                <?php 
-                  if($info['info_gender'] == "Male"){
-                    echo '<div class="col-sm-2 mb-1 mb-sm-0">
+                <div class="col-sm-2 mb-1 mb-sm-0">
+                  <input type="password" id="room" class="form-control " name="password" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="Password">
+                </div>
+                <div class="col-sm-2 mb-1 mb-sm-0">
+                  <input type="password" id="room" class="form-control " name="confirmPassword" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="Password">
+                </div>
+
+          </div>
+          <div class="row">
+                  <div class="col-sm-2 mb-1 mb-sm-0">
                     <select name="gender"  class="form-control " style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
-                      <option selected value="Male">Male</option>
+                      <option value="" disabled selected>Gender</option>
+                      <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
-                  </div>';
-                  }else{
-                    echo ' <div class="col-sm-2 mb-1 mb-sm-0">
-                    <select name="gender"  class="form-control " style="font-size: 0.8rem;border-radius: 10rem;height: 5vh">
-                      <option value="Male">Male</option>
-                      <option selected value="Female">Female</option>
-                    </select>
-                  </div>';
-                  }
-
-                ?>           
-               
-           </div>
-           <div class="row">
-              <div class="col-sm-2 mb-1 mb-sm-0">
-                    <input name="dob" class="form-control form-control-user"  type="date" name="dob" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" value="<?php echo $info['info_dob'] ?>">
                   </div>
                   <div class="col-sm-2 mb-1 mb-sm-0">
+                     <input type="text" name="address"  class="form-control form-control-user" id="exampleInputAddress" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh" placeholder="Address">
+                  </div>
+                  <div class="col-sm-2 mb-1 mb-sm-0">
+                    <input name="dob" class="form-control form-control-user"  type="date" name="dob" style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh">
+                  </div>
+                <div class="col-sm-2 mb-1 mb-sm-0">
                   <input id="submit" class="btn btn-primary btn-user btn-block" type="submit" name="submit" value="Submit"  style="font-size: 0.8rem;border-radius: 10rem;height: 5vh;   margin-bottom: 1vh">
                 </div>
-           </div>
-         </form>
+          </div>
+
+          </form>
 
           
 

@@ -148,10 +148,8 @@
 
           <!-- Content Row -->
           <div  class="row">
-            <div>
-              
             
-            <table id="table" class="table  table-bordered " style="width: auto!important;">
+            <table id="table" class="table  table-bordered " style="table-layout: auto">
               <thead  class="bg-primary" style="color:white;"> 
                 <tr> 
                   <th colspan="2">Time</th>
@@ -168,92 +166,91 @@
               </thead> 
               <tbody> 
                 <tr>
-                  <td>7:00</td><td>7:30</td><td id="monday-1"></td><td id="tuesday-1"></td><td></td><td></td><td></td>
+                  <td>7:00</td><td>7:30</td><td id="monday-1"></td><td id="tuesday-1"></td><td id="wednesday-1"></td><td id="thursday-1"></td><td id="friday-1"></td>
                 </tr> 
                 <tr>
-                  <td>7:30</td><td>8:00</td><td id="monday-2"></td><td id="tuesday-2"></td><td></td><td></td><td></td>
+                  <td>7:30</td><td>8:00</td><td id="monday-2"></td><td id="tuesday-2"></td><td id="wednesday-2"></td><td id="thursday-2"></td><td id="friday-2"></td>
                 </tr> 
                 <tr>
-                  <td>8:00</td><td>8:30</td><td id="monday-3"></td><td id="tuesday-3"></td><td></td><td></td><td></td>
+                  <td>8:00</td><td>8:30</td><td id="monday-3"></td><td id="tuesday-3"></td><td id="wednesday-3"></td><td id="thursday-3"></td><td id="friday-3"></td>
                 </tr> 
                 <tr>
-                  <td>8:30</td><td>9:00</td><td id="monday-4"></td><td></td><td></td><td></td><td></td>
+                  <td>8:30</td><td>9:00</td><td id="monday-4"></td><td id="tuesday-4"></td><td id="wednesday-4"></td><td id="thursday-4"></td><td id="friday-4"></td>
                 </tr> 
                 <tr>
-                  <td>9:00</td><td>9:30</td><td id="monday-5"></td><td></td><td></td><td></td><td></td>
+                  <td>9:00</td><td>9:30</td><td id="monday-5"></td><td id="tuesday-5"></td><td id="wednesday-5"></td><td id="thursday-5"></td><td id="friday-5"></td>
                 </tr> 
                 <tr>
-                  <td>9:30</td><td>10:00</td><td id="monday-6"></td><td></td><td></td><td></td><td></td>
+                  <td>9:30</td><td>10:00</td><td id="monday-6"></td><td id="tuesday-6"></td><td id="wednesday-6"></td><td id="thursday-6"></td><td id="friday-6"></td>
                 </tr> 
                 <tr>
-                  <td>10:00</td><td>10:30</td><td id="monday-7"></td><td></td><td></td><td></td><td></td>
+                  <td>10:00</td><td>10:30</td><td id="monday-7"></td><td id="tuesday-7"></td><td id="wednesday-7"></td><td id="thursday-7"></td><td id="friday-7"></td>
                 </tr> 
                 <tr>
-                  <td>10:30</td><td>11:00</td><td id="monday-8"></td><td></td><td></td><td></td><td></td>
+                  <td>10:30</td><td>11:00</td><td id="monday-8"></td><td id="tuesday-8"></td><td id="wednesday-8"></td><td id="thursday-8"></td><td id="friday-8"></td>
                 </tr> 
                 <tr>
-                  <td>11:00</td><td>11:30</td><td id="monday-9"></td><td></td><td></td><td></td><td></td>
+                  <td>11:00</td><td>11:30</td><td id="monday-9"></td><td id="tuesday-9"></td><td id="wednesday-9"></td><td id="thursday-9"></td><td id="friday-9"></td>
                 </tr>
                 <tr>
-                  <td>11:30</td><td>12:00</td><td id="monday-10"></td><td></td><td></td><td></td><td></td>
+                  <td>11:30</td><td>12:00</td><td id="monday-10"></td><td id="tuesday-10"></td><td id="wednesday-10"></td><td id="thursday-10"></td><td id="friday-10"></td>
                 </tr> 
                 <tr>
-                  <td>12:00</td><td>12:30</td><td id="monday-11"></td><td></td><td></td><td></td><td></td>
+                  <td>12:00</td><td>12:30</td><td id="monday-11"></td><td id="tuesday-11"></td><td id="wednesday-11"></td><td id="thursday-11"></td><td id="friday-11"></td>
                 </tr> 
                 <tr>
-                  <td>12:30</td><td>1:00</td><td id="monday-12"></td><td></td><td></td><td></td><td></td>
+                  <td>12:30</td><td>1:00</td><td id="monday-12"></td><td id="tuesday-12"></td><td id="wednesday-12"></td><td id="thursday-12"></td><td id="friday-12"></td>
                 </tr> 
                 <tr>
-                  <td>1:00</td><td>1:30</td><td id="monday-13"></td><td></td><td></td><td></td><td></td>
+                  <td>1:00</td><td>1:30</td><td id="monday-13"></td><td id="tuesday-13"></td><td id="wednesday-13"></td><td id="thursday-13"></td><td id="friday-13"></td>
                 </tr> 
                 <tr>
-                  <td>1:30</td><td>2:00</td><td id="monday-14"></td><td></td><td></td><td></td><td></td>
+                  <td>1:30</td><td>2:00</td><td id="monday-14"></td><td id="tuesday-14"></td><td id="wednesday-14"></td><td id="thursday-14"></td><td id="friday-14"></td>
                 </tr> 
                 <tr>
-                  <td>2:00</td><td>2:30</td><td id="monday-15"></td><td></td><td></td><td></td><td></td>
+                  <td>2:00</td><td>2:30</td><td id="monday-15"></td><td id="tuesday-15"></td><td id="wednesday-15"></td><td id="thursday-15"></td><td id="friday-15"></td>
                 </tr>
                 <tr>
-                  <td>2:30</td><td>3:00</td><td id="monday-16"></td><td></td><td></td><td></td><td></td>
+                  <td>2:30</td><td>3:00</td><td id="monday-16"></td><td id="tuesday-16"></td><td id="wednesday-16"></td><td id="thursday-16"></td><td id="friday-16"></td>
                 </tr> 
                 <tr>
-                  <td>3:00</td><td>3:30</td><td id="monday-17"></td><td></td><td></td><td></td><td></td>
+                  <td>3:00</td><td>3:30</td><td id="monday-17"></td><td id="tuesday-17"></td><td id="wednesday-17"></td><td id="thursday-17"></td><td id="friday-17"></td>
                 </tr> 
                 <tr>
-                  <td>3:30</td><td>4:00</td><td id="monday-18"></td><td></td><td></td><td></td><td></td>
+                  <td>3:30</td><td>4:00</td><td id="monday-18"></td><td id="tuesday-18"></td><td id="wednesday-18"></td><td id="thursday-18"></td><td id="friday-18"></td>
                 </tr> 
                 <tr>
-                  <td>4:00</td><td>4:30</td><td id="monday-19"></td><td></td><td></td><td></td><td></td>
+                  <td>4:00</td><td>4:30</td><td id="monday-19"></td><td id="tuesday-19"></td><td id="wednesday-19"></td><td id="thursday-19"></td><td id="friday-19"></td>
                 </tr>
                 <tr>
-                  <td>4:30</td><td>5:00</td><td id="monday-20"></td><td></td><td></td><td></td><td></td>
+                  <td>4:30</td><td>5:00</td><td id="monday-20"></td><td id="tuesday-20"></td><td id="wednesday-20"></td><td id="thursday-20"></td><td id="friday-20"></td>
                 </tr> 
                 <tr>
-                  <td>5:00</td><td>5:30</td><td id="monday-21"></td><td></td><td></td><td></td><td></td>
+                  <td>5:00</td><td>5:30</td><td id="monday-21"></td><td id="tuesday-21"></td><td id="wednesday-21"></td><td id="thursday-21"></td><td id="friday-21"></td>
                 </tr> 
                 <tr>
-                  <td>5:30</td><td>6:00</td><td id="monday-22"></td><td></td><td></td><td></td><td></td>
+                  <td>5:30</td><td>6:00</td><td id="monday-22"></td><td id="tuesday-22"></td><td id="wednesday-22"></td><td id="thursday-22"></td><td id="friday-22"></td>
                 </tr> 
                 <tr>
-                  <td>6:00</td><td>6:30</td><td id="monday-23"></td><td></td><td></td><td></td><td></td>
+                  <td>6:00</td><td>6:30</td><td id="monday-23"></td><td id="tuesday-23"></td><td id="wednesday-23"></td><td id="thursday-23"></td><td id="friday-23"></td>
                 </tr> 
                 <tr>
-                  <td>6:30</td><td>7:00</td><td id="monday-24"></td><td></td><td></td><td></td><td></td>
+                  <td>6:30</td><td>7:00</td><td id="monday-24"></td><td id="tuesday-24"></td><td id="wednesday-24"></td><td id="thursday-24"></td><td id="friday-24"></td>
                 </tr> 
                 <tr>
-                  <td>7:00</td><td>7:30</td><td id="monday-25"></td><td></td><td></td><td></td><td></td>
+                  <td>7:00</td><td>7:30</td><td id="monday-25"></td><td id="tuesday-25"></td><td id="wednesday-25"></td><td id="thursday-25"></td><td id="friday-25"></td>
                 </tr>
                 <tr>
-                  <td>7:30</td><td>8:00</td><td id="monday-26"></td><td></td><td></td><td></td><td></td>
+                  <td>7:30</td><td>8:00</td><td id="monday-26"></td><td id="tuesday-26"></td><td id="wednesday-26"></td><td id="thursday-26"></td><td id="friday-26"></td>
                 </tr> 
                 <tr>
-                  <td>8:00</td><td>8:30</td><td id="monday-27"></td><td></td><td></td><td></td><td></td>
+                  <td>8:00</td><td>8:30</td><td id="monday-27"></td><td id="tuesday-27"></td><td id="wednesday-27"></td><td id="thursday-27"></td><td id="friday-27"></td>
                 </tr> 
                 <tr>
-                  <td>8:30</td><td>9:00</td><td id="monday-28"></td><td></td><td></td><td></td><td></td>
+                  <td>8:30</td><td>9:00</td><td id="monday-28"></td><td id="tuesday-28"></td><td id="wednesday-28"></td><td id="thursday-28"></td><td id="friday-28"></td>
                 </tr> 
               </tbody>
             </table>
-            </div>
           </div>
 
           

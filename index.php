@@ -47,7 +47,10 @@ ccccc<!DOCTYPE html>
 		      	  	}elseif($result['user_type'] == 3){
 		      	  		$_SESSION['user_id'] = $result['user_id'];
 		      	  		header("location:dashboardDPD.php");
-		      	  	}
+		      	  	}elseif($result['user_type'] == 4){
+                  $_SESSION['user_id'] = $result['user_id'];
+                  header("location:dashboardAdmin.php");
+                }
 		      	  }else{
 		      	  	$error = "<div class='alert alert-danger' role='alert'>
                       Incorrect password.

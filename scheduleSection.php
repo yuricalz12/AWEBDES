@@ -38,11 +38,10 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboardDPD.php">
         <div class="sidebar-brand-icon">
          <img class="img-profile"  style="height: 5vh;" src="img/test2.png">
         </div>
@@ -77,11 +76,15 @@
           <span>Schedule Student</span></a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="scheduleMultiple.php">
+         <i class="fas fa-fw fa-calendar-plus "></i>
+          <span>Assign Students to Section</span></a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="scheduleTeacher.php">
          <i class="fas fa-fw fa-calendar-plus "></i>
           <span>Schedule Teacher</span></a>
       </li>
-   
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -92,8 +95,8 @@
       </div>
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="profile.php">
+      <li class="nav-item ">
+        <a class="nav-link" href="profileDPD.php">
          <i class="fas fa-fw fa-cog"></i>
           <span>Profile</span></a>
       </li>
@@ -154,9 +157,40 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          <?php
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Schedule to Section</h1>
+            if(isset($_POST['submit'])){
+               $subject = $_POST['subject'];
+               $room = $_POST['room'];
+               $section = $_POST['section'];
+               $dpd =  $_SESSION['user_id'];
+               $classType = $_POST['classType'];
+               $day =  $_POST['day'];
+               $start_time = $_POST['start'];
+               $end_time =  $_POST['end'];
+               $count = 0;
+                foreach (range($start_time+1, $end_time-1) as $key) {
+                  $count++;
+                }   
+                $start_time++;
+                while ($count  != 0) {
+                  $timeID[] = $start_time++;
+
+                  $count--;
+                } 
+
+                $between = implode(',', $timeID);
+               $stmt = $db->prepare("INSERT INTO section_schedule (subject_id, room_id, section_id, dpd_id, class_type, day, start_time_id, end_time_id, between_time_id) VALUES (?,?,?,?,?,?,?,?,?)");
+               $stmt->bind_param("iiiissiis", $subject, $room, $section, $dpd, $classType, $day, $_POST['start'], $_POST['end'],$between);
+                  if($stmt->execute()){
+                    echo "<div class='alert alert-success alert-dismissible' role='alert' ><strong>Successfuly scheduled<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>";
+                  }else{
+                  
+                  }
+            }
+
+
+           ?>
 
           <div id="alertContainer">
             
@@ -164,7 +198,7 @@
           <!-- Content Row -->
           <form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
             
-            
+            <br>
             <div id="inputContainer" class="row">
                <div class="col-md-2 col-sm-3 mb-1 mb-sm-0">
                   <?php 
@@ -218,114 +252,110 @@
                 </div>
             </div>
          </form>
-
-          <div  class="row">
-            <div class="col-md-10 ">
-              
-            <table id="table" class="table" style="display:none;table-layout: auto; overflow-x: scroll;">
-              <thead  class="bg-primary  table-bordered " style="color:white;"> 
+         <br>
+          <div class="row" id="tableContainer">
+            <table id="table" class="table  table-bordered " style="table-layout: auto;">
+              <thead  class="bg-primary" style="color:white;"> 
                 <tr> 
                   <th colspan="2">Time</th>
                   <th colspan="5">Days </th>
                 </tr>
                 <tr>
-                  <th colspan="2"></th> 
-                  <th style="width: 15vh">Monday</th> 
-                  <th style="width: 15vh">Tuesday</th> 
-                  <th style="width: 15vh">Wednesday</th> 
-                  <th style="width: 15vh">Thursday</th> 
-                  <th style="width: 15vh">Friday</th> 
+                  <td colspan="2"></td> 
+                  <td>Monday</td> 
+                  <td>Tuesday</td> 
+                  <td>Wednesday</td> 
+                  <td>Thursday</td> 
+                  <td>Friday</td> 
                 </tr>
               </thead> 
-              <tbody class=" table-bordered "> 
+              <tbody> 
                 <tr>
-                  <td>7:00</td><td>7:30</td><td id="monday-1" ></td><td></td><td></td><td></td><td></td>
+                  <td>7:00</td><td>7:30</td><td id="monday-1"></td><td id="tuesday-1"></td><td id="wednesday-1"></td><td id="thursday-1"></td><td id="friday-1"></td>
                 </tr> 
                 <tr>
-                  <td>7:30</td><td>8:00</td><td id="monday-2"></td><td></td><td></td><td></td><td></td>
+                  <td>7:30</td><td>8:00</td><td id="monday-2"></td><td id="tuesday-2"></td><td id="wednesday-2"></td><td id="thursday-2"></td><td id="friday-2"></td>
                 </tr> 
                 <tr>
-                  <td>8:00</td><td>8:30</td><td id="monday-3"></td><td></td><td></td><td></td><td></td>
+                  <td>8:00</td><td>8:30</td><td id="monday-3"></td><td id="tuesday-3"></td><td id="wednesday-3"></td><td id="thursday-3"></td><td id="friday-3"></td>
                 </tr> 
                 <tr>
-                  <td>8:30</td><td>9:00</td><td id="monday-4"></td><td></td><td></td><td></td><td></td>
+                  <td>8:30</td><td>9:00</td><td id="monday-4"></td><td id="tuesday-4"></td><td id="wednesday-4"></td><td id="thursday-4"></td><td id="friday-4"></td>
                 </tr> 
                 <tr>
-                  <td>9:00</td><td>9:30</td><td id="monday-5"></td><td></td><td></td><td></td><td></td>
+                  <td>9:00</td><td>9:30</td><td id="monday-5"></td><td id="tuesday-5"></td><td id="wednesday-5"></td><td id="thursday-5"></td><td id="friday-5"></td>
                 </tr> 
                 <tr>
-                  <td>9:30</td><td>10:00</td><td id="monday-6"></td><td></td><td></td><td></td><td></td>
+                  <td>9:30</td><td>10:00</td><td id="monday-6"></td><td id="tuesday-6"></td><td id="wednesday-6"></td><td id="thursday-6"></td><td id="friday-6"></td>
                 </tr> 
                 <tr>
-                  <td>10:00</td><td>10:30</td><td id="monday-7"></td><td></td><td></td><td></td><td></td>
+                  <td>10:00</td><td>10:30</td><td id="monday-7"></td><td id="tuesday-7"></td><td id="wednesday-7"></td><td id="thursday-7"></td><td id="friday-7"></td>
                 </tr> 
                 <tr>
-                  <td>10:30</td><td>11:00</td><td id="monday-8"></td><td></td><td></td><td></td><td></td>
+                  <td>10:30</td><td>11:00</td><td id="monday-8"></td><td id="tuesday-8"></td><td id="wednesday-8"></td><td id="thursday-8"></td><td id="friday-8"></td>
                 </tr> 
                 <tr>
-                  <td>11:00</td><td>11:30</td><td id="monday-9"></td><td></td><td></td><td></td><td></td>
+                  <td>11:00</td><td>11:30</td><td id="monday-9"></td><td id="tuesday-9"></td><td id="wednesday-9"></td><td id="thursday-9"></td><td id="friday-9"></td>
                 </tr>
                 <tr>
-                  <td>11:30</td><td>12:00</td><td id="monday-10"></td><td></td><td></td><td></td><td></td>
+                  <td>11:30</td><td>12:00</td><td id="monday-10"></td><td id="tuesday-10"></td><td id="wednesday-10"></td><td id="thursday-10"></td><td id="friday-10"></td>
                 </tr> 
                 <tr>
-                  <td>12:00</td><td>12:30</td><td id="monday-11"></td><td></td><td></td><td></td><td></td>
+                  <td>12:00</td><td>12:30</td><td id="monday-11"></td><td id="tuesday-11"></td><td id="wednesday-11"></td><td id="thursday-11"></td><td id="friday-11"></td>
                 </tr> 
                 <tr>
-                  <td>12:30</td><td>1:00</td><td id="monday-12"></td><td></td><td></td><td></td><td></td>
+                  <td>12:30</td><td>1:00</td><td id="monday-12"></td><td id="tuesday-12"></td><td id="wednesday-12"></td><td id="thursday-12"></td><td id="friday-12"></td>
                 </tr> 
                 <tr>
-                  <td>1:00</td><td>1:30</td><td id="monday-13"></td><td></td><td></td><td></td><td></td>
+                  <td>1:00</td><td>1:30</td><td id="monday-13"></td><td id="tuesday-13"></td><td id="wednesday-13"></td><td id="thursday-13"></td><td id="friday-13"></td>
                 </tr> 
                 <tr>
-                  <td>1:30</td><td>2:00</td><td id="monday-14"></td><td></td><td></td><td></td><td></td>
+                  <td>1:30</td><td>2:00</td><td id="monday-14"></td><td id="tuesday-14"></td><td id="wednesday-14"></td><td id="thursday-14"></td><td id="friday-14"></td>
                 </tr> 
                 <tr>
-                  <td>2:00</td><td>2:30</td><td id="monday-15"></td><td></td><td></td><td></td><td></td>
+                  <td>2:00</td><td>2:30</td><td id="monday-15"></td><td id="tuesday-15"></td><td id="wednesday-15"></td><td id="thursday-15"></td><td id="friday-15"></td>
                 </tr>
                 <tr>
-                  <td>2:30</td><td>3:00</td><td id="monday-16"></td><td></td><td></td><td></td><td></td>
+                  <td>2:30</td><td>3:00</td><td id="monday-16"></td><td id="tuesday-16"></td><td id="wednesday-16"></td><td id="thursday-16"></td><td id="friday-16"></td>
                 </tr> 
                 <tr>
-                  <td>3:00</td><td>3:30</td><td id="monday-17"></td><td></td><td></td><td></td><td></td>
+                  <td>3:00</td><td>3:30</td><td id="monday-17"></td><td id="tuesday-17"></td><td id="wednesday-17"></td><td id="thursday-17"></td><td id="friday-17"></td>
                 </tr> 
                 <tr>
-                  <td>3:30</td><td>4:00</td><td id="monday-18"></td><td></td><td></td><td></td><td></td>
+                  <td>3:30</td><td>4:00</td><td id="monday-18"></td><td id="tuesday-18"></td><td id="wednesday-18"></td><td id="thursday-18"></td><td id="friday-18"></td>
                 </tr> 
                 <tr>
-                  <td>4:00</td><td>4:30</td><td id="monday-19"></td><td></td><td></td><td></td><td></td>
+                  <td>4:00</td><td>4:30</td><td id="monday-19"></td><td id="tuesday-19"></td><td id="wednesday-19"></td><td id="thursday-19"></td><td id="friday-19"></td>
                 </tr>
                 <tr>
-                  <td>4:30</td><td>5:00</td><td id="monday-20"></td><td></td><td></td><td></td><td></td>
+                  <td>4:30</td><td>5:00</td><td id="monday-20"></td><td id="tuesday-20"></td><td id="wednesday-20"></td><td id="thursday-20"></td><td id="friday-20"></td>
                 </tr> 
                 <tr>
-                  <td>5:00</td><td>5:30</td><td id="monday-21"></td><td></td><td></td><td></td><td></td>
+                  <td>5:00</td><td>5:30</td><td id="monday-21"></td><td id="tuesday-21"></td><td id="wednesday-21"></td><td id="thursday-21"></td><td id="friday-21"></td>
                 </tr> 
                 <tr>
-                  <td>5:30</td><td>6:00</td><td id="monday-22"></td><td></td><td></td><td></td><td></td>
+                  <td>5:30</td><td>6:00</td><td id="monday-22"></td><td id="tuesday-22"></td><td id="wednesday-22"></td><td id="thursday-22"></td><td id="friday-22"></td>
                 </tr> 
                 <tr>
-                  <td>6:00</td><td>6:30</td><td id="monday-23"></td><td></td><td></td><td></td><td></td>
+                  <td>6:00</td><td>6:30</td><td id="monday-23"></td><td id="tuesday-23"></td><td id="wednesday-23"></td><td id="thursday-23"></td><td id="friday-23"></td>
                 </tr> 
                 <tr>
-                  <td>6:30</td><td>7:00</td><td id="monday-24"></td><td></td><td></td><td></td><td></td>
+                  <td>6:30</td><td>7:00</td><td id="monday-24"></td><td id="tuesday-24"></td><td id="wednesday-24"></td><td id="thursday-24"></td><td id="friday-24"></td>
                 </tr> 
                 <tr>
-                  <td>7:00</td><td>7:30</td><td id="monday-25"></td><td></td><td></td><td></td><td></td>
+                  <td>7:00</td><td>7:30</td><td id="monday-25"></td><td id="tuesday-25"></td><td id="wednesday-25"></td><td id="thursday-25"></td><td id="friday-25"></td>
                 </tr>
                 <tr>
-                  <td>7:30</td><td>8:00</td><td id="monday-26"></td><td></td><td></td><td></td><td></td>
+                  <td>7:30</td><td>8:00</td><td id="monday-26"></td><td id="tuesday-26"></td><td id="wednesday-26"></td><td id="thursday-26"></td><td id="friday-26"></td>
                 </tr> 
                 <tr>
-                  <td>8:00</td><td>8:30</td><td id="monday-27"></td><td></td><td></td><td></td><td></td>
+                  <td>8:00</td><td>8:30</td><td id="monday-27"></td><td id="tuesday-27"></td><td id="wednesday-27"></td><td id="thursday-27"></td><td id="friday-27"></td>
                 </tr> 
                 <tr>
-                  <td>8:30</td><td>9:00</td><td id="monday-28"></td><td></td><td></td><td></td><td></td>
+                  <td>8:30</td><td>9:00</td><td id="monday-28"></td><td id="tuesday-28"></td><td id="wednesday-28"></td><td id="thursday-28"></td><td id="friday-28"></td>
                 </tr> 
               </tbody>
             </table>
-
-            </div>
           </div>
 
         </div>
@@ -375,28 +405,7 @@
   </div>
 
 
- <?php
-
-  if(isset($_POST['submit'])){
-     $subject = $_POST['subject'];
-     $room = $_POST['room'];
-     $section = $_POST['section'];
-     $dpd =  $_SESSION['user_id'];
-     $classType = $_POST['classType'];
-     $day =  $_POST['day'];
-     $start_time = $_POST['start'];
-     $end_time =  $_POST['end'];
-     $stmt = $db->prepare("INSERT INTO section_schedule (subject_id, room_id, section_id, dpd_id, class_type, day, start_time_id, end_time_id) VALUES (?,?,?,?,?,?,?,?)");
-     $stmt->bind_param("iiiissii", $subject, $room, $section, $dpd, $classType, $day, $start_time, $end_time);
-        if($stmt->execute()){
-         
-        }else{
-        
-        }
-  }
-
-
- ?>
+ 
 
 
 
@@ -479,11 +488,13 @@
 
      $('#inputContainer').on('change', '#day', function() {
         var section = $('#section').val();
+        var day = $('#day').val();
         $.ajax({
            type: "POST",
            url: "php/request.php",
            data: { action: "getSectionStartTime",
-                   section: section},
+                   section: section,
+                   day: day},
            success: function(response) {
                $('#startTime').html(response);
                $('#startTime').css('display', 'block');
@@ -503,6 +514,7 @@
         var subject = $('#subject').val();
         var classType = $('#classType').val();
         var section = $('#section').val();
+        var day = $('#day').val();
         $.ajax({
            type: "POST",
            url: "php/request.php",
@@ -510,7 +522,8 @@
                    start: start,
                    subject: subject,
                    classType: classType,
-                   section: section},
+                   section: section,
+                   day: day},
            success: function(response) {
                 console.log(response);
                 if(response == 0){
@@ -579,8 +592,8 @@
                 $('#table').css('display', 'none');
                 $('#alertContainer').html("<div class='alert alert-danger alert-dismissible' role='alert' ><strong>No schedule<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
               }else{
-                  var obj = JSON.parse(response);
-                  console.log(obj);
+                setTimeout(function(){
+                    var obj = JSON.parse(response);
                    obj.forEach(el => {
                       el.time.forEach(time =>{
                          $('#'+el.day+"-"+time.time_id).css("background", el.color);
@@ -597,6 +610,8 @@
                        }
 
                    });
+                }, 1500)
+                  
               }
               
 
@@ -610,7 +625,7 @@
           url: "php/request.php",
           data: { action: "tableReset"},
           success: function(response){
-              $('#table').html(response);
+              $('#tableContainer').html(response);
             }
           
         });

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2020 at 03:30 AM
+-- Generation Time: Mar 11, 2020 at 08:58 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -78,7 +78,10 @@ CREATE TABLE `room` (
 
 INSERT INTO `room` (`room_id`, `room_name`) VALUES
 (1, 'Room 111'),
-(2, 'Room 101');
+(2, 'Room 101'),
+(3, 'Room 104'),
+(6, 'SPN'),
+(8, 'Room 204');
 
 -- --------------------------------------------------------
 
@@ -120,7 +123,20 @@ INSERT INTO `schedule` (`schedule_id`, `subject_id`, `room_id`, `user_id`, `dpd_
 (50, 1, 1, 24, 17, 'laboratory', 'monday', 3, 5),
 (51, 1, 1, 24, 17, 'lecture', 'monday', 9, 11),
 (52, 1, 1, 24, 17, 'laboratory', 'monday', 13, 17),
-(53, 2, 1, 24, 17, 'laboratory', 'monday', 17, 23);
+(53, 2, 1, 24, 17, 'laboratory', 'monday', 17, 23),
+(82, 1, 1, 18, 17, 'lecture', 'monday', 1, 3),
+(83, 1, 1, 18, 17, 'laboratory', 'monday', 3, 5),
+(84, 1, 1, 18, 17, 'lecture', 'monday', 9, 11),
+(85, 1, 1, 18, 17, 'laboratory', 'monday', 13, 17),
+(86, 2, 1, 18, 17, 'lecture', 'monday', 5, 9),
+(87, 2, 1, 18, 17, 'laboratory', 'monday', 17, 23),
+(88, 3, 1, 15, 17, 'lecture', 'tuesday', 1, 3),
+(89, 3, 1, 15, 17, 'lecture', 'wednesday', 1, 3),
+(90, 3, 1, 15, 17, 'laboratory', 'thursday', 7, 13),
+(115, 1, 1, 16, 17, 'lecture', 'monday', 1, 3),
+(116, 1, 1, 16, 17, 'laboratory', 'monday', 3, 5),
+(117, 1, 1, 16, 17, 'lecture', 'monday', 9, 11),
+(118, 1, 1, 16, 17, 'laboratory', 'monday', 13, 17);
 
 -- --------------------------------------------------------
 
@@ -162,20 +178,32 @@ CREATE TABLE `section_schedule` (
   `class_type` varchar(50) NOT NULL,
   `day` varchar(50) NOT NULL,
   `start_time_id` int(11) NOT NULL,
-  `end_time_id` int(11) NOT NULL
+  `end_time_id` int(11) NOT NULL,
+  `between_time_id` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `section_schedule`
 --
 
-INSERT INTO `section_schedule` (`schedule_id`, `subject_id`, `room_id`, `section_id`, `dpd_id`, `class_type`, `day`, `start_time_id`, `end_time_id`) VALUES
-(1, 1, 1, 1, 17, 'lecture', 'monday', 1, 3),
-(3, 2, 1, 1, 17, 'lecture', 'monday', 5, 9),
-(5, 1, 1, 1, 17, 'laboratory', 'monday', 3, 5),
-(6, 1, 1, 1, 17, 'lecture', 'monday', 9, 11),
-(7, 1, 1, 1, 17, 'laboratory', 'monday', 13, 17),
-(8, 2, 1, 1, 17, 'laboratory', 'monday', 17, 23);
+INSERT INTO `section_schedule` (`schedule_id`, `subject_id`, `room_id`, `section_id`, `dpd_id`, `class_type`, `day`, `start_time_id`, `end_time_id`, `between_time_id`) VALUES
+(1, 1, 1, 1, 17, 'lecture', 'monday', 1, 3, '2'),
+(3, 2, 1, 1, 17, 'lecture', 'monday', 5, 9, '6,7,8'),
+(5, 1, 1, 1, 17, 'laboratory', 'monday', 3, 5, '4'),
+(6, 1, 1, 1, 17, 'lecture', 'monday', 9, 11, '10'),
+(7, 1, 1, 1, 17, 'laboratory', 'monday', 13, 17, '14,15,16'),
+(8, 2, 1, 1, 17, 'laboratory', 'monday', 17, 23, '18,19,20,21,22'),
+(9, 1, 2, 2, 17, 'lecture', 'monday', 1, 5, '2,3,4,'),
+(10, 1, 2, 2, 17, 'laboratory', 'monday', 5, 11, '6,7,8,9,10'),
+(11, 2, 2, 2, 17, 'lecture', 'monday', 13, 19, '14,15,16,17,18'),
+(12, 2, 2, 2, 17, 'laboratory', 'monday', 19, 25, '20,21,22,23,24'),
+(13, 2, 3, 3, 17, 'lecture', 'monday', 1, 7, '2,3,4,5,6'),
+(16, 2, 3, 3, 17, 'laboratory', 'monday', 7, 13, '8,9,10,11,12'),
+(21, 1, 3, 3, 17, 'lecture', 'monday', 15, 19, '16,17,18'),
+(22, 1, 2, 3, 17, 'laboratory', 'monday', 19, 25, '20,21,22,23,24'),
+(23, 3, 1, 1, 17, 'lecture', 'tuesday', 1, 3, '2'),
+(28, 3, 1, 1, 17, 'lecture', 'wednesday', 1, 3, '2'),
+(30, 3, 1, 1, 17, 'laboratory', 'thursday', 7, 13, '8,9,10,11,12');
 
 -- --------------------------------------------------------
 
@@ -202,7 +230,8 @@ CREATE TABLE `subject` (
 
 INSERT INTO `subject` (`subject_id`, `subject_name`, `subject_code`, `subject_lecture_hour`, `subject_lab_hour`, `department_id`, `course_id`, `semester_id`, `year_level_id`, `subject_color`) VALUES
 (1, 'AWEBDES', 'AWEBDES', 2, 3, 1, 1, 1, 1, '#1c69e6'),
-(2, 'INFOMAN', 'INFOMAN', 3, 3, 1, 1, 1, 1, '#07f22e');
+(2, 'INFOMAN', 'INFOMAN', 3, 3, 1, 1, 1, 1, '#07f22e'),
+(3, 'IPTECH', 'IPTECH', 2, 3, 1, 1, 1, 1, '#4287f5');
 
 -- --------------------------------------------------------
 
@@ -275,7 +304,9 @@ INSERT INTO `user` (`user_id`, `user_email`, `user_password`, `department_id`, `
 (17, 'janedoe@gmail.com', '$2y$10$rcgr6DrCjxF6LWh8GUQLbeJ5yYcByJXvb0dWGtcWbcL0b3aa8xu1e', 2, 0, 3),
 (18, 'test@gmail.com', '$2y$10$NOuSgFH03vonDxTKylt.TeihSBHGgKQL54vrkyAGqbNV.w3uaQcPy', 1, 1, 1),
 (23, 'student1@gmail.com', '$2y$10$TUrOwpFXOERLfjzBzKBaZ.Nf71Dk.Y4JKDG9nsoT5gvNanhmBH.1O', 1, 1, 1),
-(24, 'student2@gmail.com', '$2y$10$EQjQ2kJrEXYTINcIa.4/0un6kmN91nCuwOR9B9rni1eBmI7j8Wd2G', 1, 1, 1);
+(24, 'student2@gmail.com', '$2y$10$EQjQ2kJrEXYTINcIa.4/0un6kmN91nCuwOR9B9rni1eBmI7j8Wd2G', 1, 1, 1),
+(25, 'admin@gmail.com', '$2y$10$uuGu97PGlVxbqL3D/VSqKOaKyqB1uioIT6wVkugq7XjT6KjQf3Qi2', 1, 1, 4),
+(29, 'teacher1@gmail.com', '$2y$10$trDylTAWXXxBlO9yaXzWCuB.36iBYDIQH9uwL.0IFggAeUn8PP9My', 0, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -299,12 +330,14 @@ CREATE TABLE `user_information` (
 --
 
 INSERT INTO `user_information` (`info_id`, `user_id`, `info_first_name`, `info_last_name`, `info_address`, `info_gender`, `info_dob`, `info_profile_picture`) VALUES
-(6, 15, 'Judge Yuri', 'Calumpang', 'Gomez St.', 'Male', '1997-01-01', 'img/Male.png'),
-(7, 16, 'John', 'Doe', 'Dumaguete', 'Male', '1995-04-04', 'img/Male.png'),
-(8, 17, 'Jane', 'Doe', 'Dumaguete', 'Female', '1997-03-21', 'img/Female.png'),
-(9, 18, 'Yuri', 'Calz', 'Gomez St.', 'Male', '1995-01-01', 'img/Male.png'),
-(10, 23, 'Loren', 'Mathews', 'Dumaguete', 'Male', '1997-11-05', 'img/Male.png'),
-(11, 24, 'Trevor', 'Heath', 'Dumaguete', 'Male', '1998-12-05', 'img/Male.png');
+(6, 15, 'Judge Yuri', 'Calumpang', 'Dumaguete', 'Male', '1997-01-01', 'img/Male.png'),
+(7, 16, 'John', 'Doe', 'Tanjay', 'Male', '1997-01-01', 'img/Male.png'),
+(8, 17, 'Jane', 'Doe', 'Bais City', 'Male', '1997-01-01', 'img/Female.png'),
+(9, 18, 'Sean', 'Holmes', 'Pamplona', 'Male', '1997-01-01', 'img/Male.png'),
+(10, 23, 'Mark', 'Reyes', 'Bacong', 'Male', '1997-01-01', 'img/Male.png'),
+(11, 24, 'Steve', 'Jobs', 'Valencia', 'Male', '1997-01-01', 'img/Male.png'),
+(12, 25, 'Admin', 'Admin', 'Dumaguete', 'Male', '1997-01-01', 'img/Male.png'),
+(16, 29, 'Blake', 'Tyler', 'Amlan', 'Male', '1997-01-01', 'img/Male.png');
 
 --
 -- Indexes for dumped tables
@@ -390,13 +423,13 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT for table `section`
@@ -408,13 +441,13 @@ ALTER TABLE `section`
 -- AUTO_INCREMENT for table `section_schedule`
 --
 ALTER TABLE `section_schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `time`
@@ -426,13 +459,13 @@ ALTER TABLE `time`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `user_information`
 --
 ALTER TABLE `user_information`
-  MODIFY `info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
